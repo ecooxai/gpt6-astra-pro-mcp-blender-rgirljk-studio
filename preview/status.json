@@ -1,32 +1,36 @@
 {
-  "revision": 2,
-  "score": 62,
-  "iterations": 2,
+  "revision": 7,
+  "score": 73,
+  "iterations": 7,
   "state": "Reviewed - improving",
-  "notes": "Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized.",
-  "model": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+  "notes": "Five views reviewed. Eye glare reduced and crown rounded. The smile still has too much dark opening; eye spacing, teeth, lips and smiling cheek contours need refinement.",
+  "model": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "renders": [
     {
-      "file": "face_r02.png",
+      "file": "face_r07.png",
       "label": "Face and hair close-up"
     },
     {
-      "file": "back_r02.png",
+      "file": "threequarter_r07.png",
+      "label": "Three-quarter inspection"
+    },
+    {
+      "file": "back_r07.png",
       "label": "Backpack and hidden hands"
     },
     {
-      "file": "side_r02.png",
+      "file": "side_r07.png",
       "label": "Side silhouette"
     }
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-03T20:03:27+00:00",
-  "hero": "front_r02.png",
+  "updated": "2026-10-03T21:00:44+00:00",
+  "hero": "front_r07.png",
   "downloads": [
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
-      "label": "3D model - GLB"
+      "label": "Portable 3D model - GLB"
     },
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
@@ -35,6 +39,11 @@
   ],
   "history": [
     "Iteration 1 / revision 1: 48/100 - Recognizable outfit and pose, but scalp gap, sock intersections, angular face contours, overly smooth ponytails and jagged neckline. Not near 95/100.",
-    "Iteration 2 / revision 2: 62/100 - Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized."
+    "Iteration 2 / revision 2: 62/100 - Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized.",
+    "Iteration 3 / revision 3: 68/100 - Five views reviewed. Equal-length leg joints, relaxed torso, neck attachment and shoe straps improved. Hair remains too stiff; blouse is too short and the face remains stylized.",
+    "Iteration 4 / revision 4: 70/100 - Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth.",
+    "Iteration 5 / revision 5: 72/100 - Five views reviewed. Continuous hair and wavy ponytails are improved. The larger smile exposes jagged face-opening edges; eyelid rims remain artificial. These are the next fixes.",
+    "Iteration 6 / revision 6: 72/100 - Five views reviewed. Mouth edge repaired and web export merged to 35 meshes. Eye reflections became too strong, so resemblance score is unchanged. Next: eye glare, smile curvature and fringe shape.",
+    "Iteration 7 / revision 7: 73/100 - Five views reviewed. Eye glare reduced and crown rounded. The smile still has too much dark opening; eye spacing, teeth, lips and smiling cheek contours need refinement."
   ]
 }
