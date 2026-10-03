@@ -6,3 +6,7 @@ reference/
 preview/*.blend*
 preview/*.glb
 preview/*.zip
+preview/reference.png
+preview/browser_*.png
+preview/*.blend1
+core*

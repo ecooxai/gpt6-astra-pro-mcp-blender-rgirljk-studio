@@ -32,7 +32,7 @@ oral=material('Mouth interior',(.055,.011,.016),.68)
 teeth=material('Teeth • natural ivory',(.84,.80,.67),.29)
 white=material('Shirt • soft cotton',(.77,.80,.86),.82)
 seamwhite=material('Shirt seams',(.58,.63,.72),.89)
-navy=material('Backpack • navy woven fabric',(.026,.043,.078),.84)
+navy=material('Backpack • navy woven fabric',(.011,.020,.043),.90)
 webbing=material('Strap webbing',(.012,.015,.021),.88)
 buckle=material('Buckles • charcoal polymer',(.018,.022,.027),.33)
 sole=material('Loafer soles • rubber',(.012,.013,.016),.52)
@@ -109,10 +109,10 @@ def tube(name,pts,rads,mat,n=56,sides=40,ratio=1,ribs=0,parent=None):
 def fabric(name,kind):
     N=512;yy,xx=np.mgrid[0:N,0:N];u=xx/N;v=yy/N
     if kind=='plaid':
-        col=np.zeros((N,N,4),dtype=np.float32);col[:,:,:3]=(.105,.125,.172)
+        col=np.zeros((N,N,4),dtype=np.float32);col[:,:,:3]=(.080,.090,.122)
         band=lambda x,c,w: np.clip(1-(np.abs((x-c+.5)%1-.5)-w)*180,0,1)
         broad=np.maximum(band(u,.23,.073),band(v,.22,.075));thin=np.maximum(band(u,.73,.012),band(v,.71,.012));hair=np.maximum(band(u,.09,.004),band(v,.065,.004))
-        col[:,:,:3]+=broad[:,:,None]*np.array([.118,.132,.153]);col[:,:,:3]+=thin[:,:,None]*np.array([.088,.10,.115]);col[:,:,:3]+=hair[:,:,None]*np.array([.055,.06,.07])
+        col[:,:,:3]+=broad[:,:,None]*np.array([.083,.090,.110]);col[:,:,:3]+=thin[:,:,None]*np.array([.065,.071,.086]);col[:,:,:3]+=hair[:,:,None]*np.array([.055,.06,.07])
         dark=np.maximum(band(u,.23,.014),band(v,.22,.015));col[:,:,:3]-=dark[:,:,None]*np.array([.063,.067,.077])
         weave=(np.sin(xx*pi)*.002+((xx+yy)%3-1)*.005);col[:,:,:3]+=weave[:,:,None]
     else:
@@ -125,7 +125,7 @@ def fabric(name,kind):
 plaid=fabric('Original mathematical tartan','plaid');tiemat=fabric('Original diagonal gold tie weave','tie')
 
 # Head: anatomical cross-section loft with integrated nose, cheeks and eye sockets.
-head=bpy.data.objects.new('HEAD • six-degree natural tilt',None);CHAR.objects.link(head);head.location=(.013,-.014,1.534);head.rotation_euler=(math.radians(-2),math.radians(6),math.radians(-2));head.scale=(.94,.94,.94)
+head=bpy.data.objects.new('HEAD • six-degree natural tilt',None);CHAR.objects.link(head);head.location=(.020,-.014,1.528);head.rotation_euler=(math.radians(-2),math.radians(6),math.radians(-2));head.scale=(1.10,1.0,.86)
 ZP=[-.122,-.115,-.10,-.08,-.05,-.015,.02,.055,.085,.115,.14,.153]
 WP=[.001,.022,.040,.059,.076,.084,.087,.086,.081,.068,.043,.001]
 DP=[.003,.027,.047,.059,.066,.073,.078,.082,.087,.078,.048,.001]
@@ -140,30 +140,30 @@ def smooth_profile(x,xs,ys):
 def shape(z):return smooth_profile(z,ZP,WP),smooth_profile(z,ZP,DP)
 def gauss(x,z,cx,cz,wx,wz):return exp(-((x-cx)/wx)**2-((z-cz)/wz)**2)
 def face_y(x,z):
-    w,d=shape(z);co=sqrt(max(0,1-(x/max(w,.001))**2));y=.010-d*co
-    y-=.030*gauss(x,z,0,-.023,.013,.012)+.014*gauss(x,z,0,.004,.009,.032)
+    w,d=shape(z);co=sqrt(max(0,1-(x/max(w,.001))**2));y=.010-.020*exp(-((z+.108)/.022)**2)-d*co
+    y-=.023*gauss(x,z,0,-.023,.014,.014)+.011*gauss(x,z,0,.004,.009,.032)
     y-=.008*gauss(x,z,0,-.031,.027,.011)
     y-=.009*(gauss(x,z,.047,-.028,.026,.024)+gauss(x,z,-.047,-.028,.026,.024))
     y+=.010*(gauss(x,z,.032,.018,.024,.013)+gauss(x,z,-.032,.018,.024,.013))
-    y-=.006*gauss(x,z,0,-.056,.036,.023)
+    y-=.008*gauss(x,z,0,-.056,.036,.023)
     return y
 V=[];F=[];cols=[];NZ=148;NT=224
 for i,z in enumerate(np.linspace(ZP[0],ZP[-1],NZ)):
     w,d=shape(z)
     for j in range(NT):
-        th=2*pi*j/NT;x=w*sin(th);front=cos(th);y=.010-d*front
-        if front>0:y+=(face_y(x,z)-(.010-d*max(front,0)))*front**.65
+        th=2*pi*j/NT;x=w*sin(th);front=cos(th);y=.010-.020*exp(-((z+.108)/.022)**2)-d*front
+        if front>0:y+=(face_y(x,z)-(.010-.020*exp(-((z+.108)/.022)**2)-d*max(front,0)))*front**.65
         else:y+=.012*(-front)*exp(-((z-.025)/.095)**2)
         V.append((x,y,z));bl=.20*(gauss(x,z,.052,-.031,.023,.024)+gauss(x,z,-.052,-.031,.023,.024))*max(front,0);cols.append((.61+bl*.22,.367-bl*.18,.263-bl*.07,1))
 for i in range(NZ-1):
     for j in range(NT):
         ids=(i*NT+j,i*NT+(j+1)%NT,(i+1)*NT+(j+1)%NT,(i+1)*NT+j);cx=sum(V[k][0] for k in ids)/4;cz=sum(V[k][2] for k in ids)/4;cy=sum(V[k][1] for k in ids)/4;u=cx/.0305
-        hole=abs(u)<1 and -.069+.026*u*u<cz<-.049+.006*u*u and cy<-.025
+        hole=abs(u)<1 and -.066+.023*u*u<cz<-.049+.006*u*u and cy<-.025
         if not hole:F.append(ids)
 headskin=skin.copy();headskin.name='Face skin • original vertex blush';cn=headskin.node_tree.nodes.new('ShaderNodeVertexColor');cn.layer_name='Col';headskin.node_tree.links.new(cn.outputs['Color'],headskin.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
 hm=mesh('Face • sculpted continuous anatomical surface',V,F,headskin,parent=head);ca=hm.data.color_attributes.new(name='Col',type='FLOAT_COLOR',domain='POINT');ca.data.foreach_set('color',np.array(cols,dtype=np.float32).ravel())
 # neck and covered upper chest
-neck=tube('Neck and upper chest',[(-.002,.014,1.304),(.005,.011,1.363),(.012,.010,1.440)],[.057,.042,.046],skin,n=32,sides=56,ratio=.89)
+neck=tube('Neck and upper chest',[(-.002,.014,1.304),(.005,.011,1.367),(.006,.012,1.476)],[.053,.0355,.034],skin,n=32,sides=56,ratio=.89)
 for side in [-1,1]:
     uvball('Ear • '+str(side),(side*.086,.010,-.013),(.017,.011,.031),skin,head)
     uvball('Ear concha • '+str(side),(side*.092,-.000,-.013),(.008,.003,.016),crease,head,24,16)
@@ -215,7 +215,7 @@ for side in [-1,1]:
 # Smiling oral cavity, upper and lower lip contours and individual teeth.
 verts=[];faces=[]
 for i,u in enumerate(np.linspace(-1,1,65)):
-    x=.0312*u;top=-.049+.006*u*u;bottom=-.069+.026*u*u
+    x=.0312*u;top=-.049+.006*u*u;bottom=-.066+.023*u*u
     for j,t in enumerate(np.linspace(0,1,9)):
         z=bottom*(1-t)+top*t;verts.append((x,face_y(x,z)+.003,z))
 for i in range(64):
@@ -224,7 +224,7 @@ mesh('Smile • dark inner mouth',verts,faces,oral,parent=head)
 for upper in [True,False]:
     pts=[]
     for u in np.linspace(-1,1,70):
-        x=.032*u;z=(-.049+.006*u*u) if upper else (-.069+.026*u*u)
+        x=.032*u;z=(-.049+.006*u*u) if upper else (-.066+.023*u*u)
         if upper:z+=.001*exp(-(u/.2)**2)
         pts.append((x,face_y(x,z)-.0015,z))
     line('Upper rose lip' if upper else 'Lower rose lip',pts,lips,.0017 if upper else .0025,head,[.23+.77*sin(pi*i/69)**.5 for i in range(70)])
@@ -233,19 +233,19 @@ for i in range(8):
     o=box('Upper tooth '+str(i),(x,face_y(x,z)+.0001,z),(.0063,.006,.0073),teeth,.0017,head);o.rotation_euler.z=-x*3
 for i in range(6):
     x=(i-2.5)*.0064;u=x/.032;z=-.066+.02*u*u
-    box('Lower tooth '+str(i),(x,face_y(x,z)+.0013,z),(.006,.004,.0033),teeth,.0013,head)
+    box('Lower tooth '+str(i),(x,face_y(x,z)+.0013,z),(.006,.004,.0017),teeth,.0013,head)
 # Hair cap and directional fibres. Every visible strand is original geometry.
 V=[];F=[];nr=44;ns=120
 for i,t in enumerate(np.linspace(.015,1,nr)):
     for j in range(ns):
-        th=2*pi*j/ns;back=(1-cos(th))/2;pol=t*(1.39+1.16*back);x=.105*sin(pol)*sin(th);y=.014-.112*sin(pol)*cos(th);z=.035+.134*cos(pol);V.append((x,y,z))
+        th=2*pi*j/ns;back=(1-cos(th))/2;pol=t*(1.10+1.45*back);x=.105*sin(pol)*sin(th);y=.014-.112*sin(pol)*cos(th);z=.035+.134*cos(pol);V.append((x,y,z))
 for i in range(nr-1):
     for j in range(ns):k=i*ns+j;q=i*ns+(j+1)%ns;F.append((k,q,q+ns,k+ns))
 mesh('Hair • fitted scalp shell',V,F,hairmats[1],parent=head)
 for k in range(360):
     th0=2*pi*k/360;pts=[]
     for t in np.linspace(.08,1,36):
-        th=th0+.16*sin(t*pi);pol=t*(1.39+1.16*(1-cos(th))/2);bump=.0008+.00035*sin(t*24+k)
+        th=th0+.16*sin(t*pi);pol=t*(1.10+1.45*(1-cos(th))/2);bump=.0008+.00035*sin(t*24+k)
         pts.append(((.105+bump)*sin(pol)*sin(th),.014-(.112+bump)*sin(pol)*cos(th),.035+(.134+bump)*cos(pol)))
     line('Scalp fibres',pts,hairmats[random.randrange(6)],.00022,head,[.4+.6*sin(pi*i/35)**.2 for i in range(36)])
 
@@ -326,7 +326,7 @@ for s in [-1,1]:
     c=cs[-10];tang=(cs[-1]-cs[-12]).normalized();axis=Vector((1,0,0));axis=(axis-tang*axis.dot(tang)).normalized();other=tang.cross(axis)
     line('Cuff stitching',[c+axis*.036*cos(t)+other*.032*sin(t) for t in np.linspace(0,2*pi,65)],seamwhite,.00045)
     tube('Forearm • behind back '+str(s),[(s*.161,.053,1.116),(s*.151,.071,1.066),(s*.124,.095,1.006),(s*.090,.132,.989)],[.028,.027,.022,.018],skin,n=48,sides=40,ratio=.87)
-    palm=uvball('Hand palm • '+str(s),(s*.083,.133,.985),(.023,.014,.034),skin);palm.rotation_euler.y=s*-.42
+    palm=uvball('Hand palm • '+str(s),(s*.083,.133,.985),(.021,.010,.027),skin);palm.rotation_euler.y=s*-.28
     for k in range(4):
         x=s*(.064+k*.011);z=.968-(.002 if k in [1,2] else 0);length=[.033,.041,.039,.030][k]
         tube('Finger '+str(s)+' '+str(k),[(x,.131,z),(x-s*.004,.132,z-length*.45),(x-s*.006,.126,z-length*.86),(x-s*.007,.118,z-length)],[.006,.0057,.0047,.0038],skin,n=18,sides=16)
@@ -370,7 +370,7 @@ box('Backpack • back pocket',(0,.208,1.175),(.180,.030,.147),navy,.026)
 box('Backpack • pocket label',(0,.226,1.205),(.031,.002,.017),webbing,.002)
 for s in [-1,1]:
     line('Backpack piping',[(s*.080,.204,1.326),(s*.106,.209,1.291),(s*.106,.215,1.139),(s*.080,.216,1.089)],webbing,.0016)
-    pp=bez([(s*.123,.136,1.315),(s*.166,.027,1.440),(s*.135,-.081,1.364),(s*.131,-.084,1.251)],48)
+    pp=bez([(s*.123,.136,1.315),(s*.151,.023,1.396),(s*.133,-.074,1.343),(s*.131,-.084,1.251)],48)
     strip('Backpack • padded shoulder strap '+str(s),[tuple(pp[i]) for i in [0,14,28,47]],[.016,.019,.017,.014],navy,thick=.006)
     strip('Backpack • webbing return '+str(s),[(s*.131,-.082,1.264),(s*.132,-.084,1.196),(s*.127,-.037,1.108),(s*.120,.084,1.074)],[.009,.009,.008,.008],webbing,thick=.003)
     for z in [1.250,1.221]:
@@ -383,8 +383,21 @@ for s in [-1,1]:
 line('Backpack top handle',bez([(-.037,.159,1.352),(-.035,.164,1.394),(.035,.164,1.394),(.037,.159,1.352)],40),webbing,.005)
 # Subtle embroidered shirt mark, original stitched motif rather than a borrowed logo.
 for k in range(4):line('Shirt embroidered mark',[(.075+k*.0014,-.087,1.254),(.079+k*.0014,-.088,1.262),(.077+k*.0014,-.087,1.266)],material('Embroidery blue '+str(k),(.26,.46,.67),.9),.0005)
-# Legs: matched anatomical segment lengths, asymmetrically posed.
+# Relaxed upper-body lean around the waist, preserving all child transforms.
+bpy.context.view_layer.update()
+upper=[o for o in CHAR.objects if o.parent is None and not o.name.startswith('Skirt')]
+lean=bpy.data.objects.new('POSE - relaxed torso lean',None);CHAR.objects.link(lean);lean.location=(0,0,1.06);bpy.context.view_layer.update()
+for ob in upper:
+    ob.parent=lean;ob.matrix_parent_inverse=lean.matrix_world.inverted()
+lean.rotation_euler.y=math.radians(3.5)
+# Legs: identical femur and tibia lengths, solved geometrically for the pose.
+def knee_ik(hip,ankle,pole,L1=.445,L2=.415):
+    hip=Vector(hip);ankle=Vector(ankle);axis=(ankle-hip).normalized();D=(ankle-hip).length
+    if not abs(L1-L2)<D<L1+L2:raise ValueError('Unreachable ankle target')
+    a=(L1*L1-L2*L2+D*D)/(2*D);h=sqrt(max(0,L1*L1-a*a));perp=Vector(pole);perp=(perp-axis*perp.dot(axis)).normalized();return hip+axis*a+perp*h
+
 LEGS=[{'side':'L','hip':(-.065,.032,.945),'knee':(-.015,-.073,.510),'ankle':(-.085,-.020,.113)}, {'side':'R','hip':(.074,.047,.950),'knee':(.059,.035,.502),'ankle':(.020,.015,.095)}]
+for leg in LEGS:leg['knee']=tuple(knee_ik(leg['hip'],leg['ankle'],(.55,-1,0) if leg['side']=='L' else (-.2,1,0)))
 measurements={}
 for d in LEGS:
     hip,knee,ankle=map(Vector,[d['hip'],d['knee'],d['ankle']]);s=d['side'];mid=hip.lerp(knee,.42);below=knee.lerp(ankle,.35)
@@ -418,10 +431,15 @@ for side,cx,cy,base,yaw in [('L',-.085,-.051,.014,-.13),('R',.020,-.013,.005,.10
     for th in np.linspace(-1.50,1.50,65):
         out=outline(th);inn=Vector((.024*sin(th),.034-.030*cos(th),0));p=out.lerp(inn,.33);z=.024+sin(.33*pi/2)*(.058-.014*cos(th))+.005*sin(pi*.33)*max(cos(th),0);pts.append((p.x,p.y,z+.001))
     line('Loafer apron stitching',pts,stitch,.0008,shoe)
-    strap=box('Loafer • penny saddle strap '+side,(0,-.037,.071),(.080,.025,.005),leather,.004,shoe)
+    sv=[];sf=[]
+    for i,x in enumerate(np.linspace(-.039,.039,29)):
+        for yy in [-.050,-.037,-.024]:sv.append((x,yy,.069-.027*(abs(x)/.040)**2))
+    for i in range(28):
+        for j in range(2):k=i*3+j;sf.append((k,k+3,k+4,k+1))
+    strap=mesh('Loafer - fitted penny saddle '+side,sv,sf,leather,parent=shoe);sm=strap.modifiers.new('Leather strap thickness','SOLIDIFY');sm.thickness=.0025
     # Curve the strap gently over the vamp by adding a central top layer.
-    line('Penny strap raised seam',[(-.039,-.050,.067),(-.021,-.051,.072),(0,-.052,.073),(.021,-.051,.072),(.039,-.050,.067)],stitch,.0008,shoe)
-    box('Penny strap slot '+side,(0,-.038,.074),(.020,.003,.0012),sole,.001,shoe)
+    line('Penny strap raised seam',[(float(x),-.050,.070-.027*(abs(x)/.040)**2) for x in np.linspace(-.039,.039,30)],stitch,.0008,shoe)
+    box('Penny strap slot '+side,(0,-.038,.071),(.020,.003,.0012),sole,.001,shoe)
 
 # Geometry-only inspection metrics: never pixel-analysis of the supplied photograph.
 metrics={'revision':args.revision,'leg_segments_metres':measurements,'original_assets_only':True,'photo_used_as_texture':False,'mesh_objects':sum(o.type=='MESH' for o in CHAR.objects),'curve_objects':sum(o.type=='CURVE' for o in CHAR.objects),'notes':'Both hidden sides and hands are authored; no pre-existing character meshes, texture scans or downloaded HDRIs.'}
