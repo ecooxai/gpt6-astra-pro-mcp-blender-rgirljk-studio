@@ -1,0 +1,42 @@
+{
+  "revision": 4,
+  "score": 70,
+  "iterations": 4,
+  "state": "Reviewed - improving",
+  "notes": "Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth.",
+  "model": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+  "renders": [
+    {
+      "file": "face_r04.png",
+      "label": "Face and hair close-up"
+    },
+    {
+      "file": "threequarter_r04.png",
+      "label": "Three-quarter inspection"
+    },
+    {
+      "file": "side_r04.png",
+      "label": "Side silhouette"
+    }
+  ],
+  "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
+  "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
+  "updated": "2026-10-03T20:21:05+00:00",
+  "hero": "front_r04.png",
+  "downloads": [
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+      "label": "3D model - GLB"
+    },
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
+      "label": "Editable Blender scene"
+    }
+  ],
+  "history": [
+    "Iteration 1 / revision 1: 48/100 - Recognizable outfit and pose, but scalp gap, sock intersections, angular face contours, overly smooth ponytails and jagged neckline. Not near 95/100.",
+    "Iteration 2 / revision 2: 62/100 - Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized.",
+    "Iteration 3 / revision 3: 68/100 - Five views reviewed. Equal-length leg joints, relaxed torso, neck attachment and shoe straps improved. Hair remains too stiff; blouse is too short and the face remains stylized.",
+    "Iteration 4 / revision 4: 70/100 - Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth."
+  ]
+}
