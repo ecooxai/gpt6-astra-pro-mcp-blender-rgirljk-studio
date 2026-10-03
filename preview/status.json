@@ -1,1 +1,40 @@
-{"revision":0,"score":null,"iterations":0,"state":"Building original geometry","notes":"Reference inspected visually. Blender modeling has started; no quality score is assigned before viewing a render.","model":null,"renders":[],"project":"/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio","build":"/build/gpt6_astra_pro_mcp_blender_rgirljk_studio","updated":"initialization"}
+{
+  "revision": 2,
+  "score": 62,
+  "iterations": 2,
+  "state": "Reviewed - improving",
+  "notes": "Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized.",
+  "model": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+  "renders": [
+    {
+      "file": "face_r02.png",
+      "label": "Face and hair close-up"
+    },
+    {
+      "file": "back_r02.png",
+      "label": "Backpack and hidden hands"
+    },
+    {
+      "file": "side_r02.png",
+      "label": "Side silhouette"
+    }
+  ],
+  "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
+  "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
+  "updated": "2026-10-03T20:03:27+00:00",
+  "hero": "front_r02.png",
+  "downloads": [
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+      "label": "3D model - GLB"
+    },
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
+      "label": "Editable Blender scene"
+    }
+  ],
+  "history": [
+    "Iteration 1 / revision 1: 48/100 - Recognizable outfit and pose, but scalp gap, sock intersections, angular face contours, overly smooth ponytails and jagged neckline. Not near 95/100.",
+    "Iteration 2 / revision 2: 62/100 - Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized."
+  ]
+}
