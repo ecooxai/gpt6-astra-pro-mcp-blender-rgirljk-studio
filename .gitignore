@@ -1,0 +1,8 @@
+build
+node_modules/
+logs/
+__pycache__/
+reference/
+preview/*.blend*
+preview/*.glb
+preview/*.zip
