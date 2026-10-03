@@ -1,32 +1,40 @@
 {
-  "revision": 4,
-  "score": 70,
-  "iterations": 4,
+  "revision": 9,
+  "score": 76,
+  "iterations": 9,
   "state": "Reviewed - improving",
-  "notes": "Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth.",
-  "model": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
+  "notes": "Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
+  "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
   "renders": [
     {
-      "file": "face_r04.png",
+      "file": "face_r09.png",
       "label": "Face and hair close-up"
     },
     {
-      "file": "threequarter_r04.png",
+      "file": "threequarter_r09.png",
       "label": "Three-quarter inspection"
     },
     {
-      "file": "side_r04.png",
+      "file": "back_r09.png",
+      "label": "Backpack and hidden hands"
+    },
+    {
+      "file": "side_r09.png",
       "label": "Side silhouette"
     }
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-03T20:21:05+00:00",
-  "hero": "front_r04.png",
+  "updated": "2026-10-03T21:25:44+00:00",
+  "hero": "front_r09.png",
   "downloads": [
     {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
+      "label": "Lightweight web model - GLB"
+    },
+    {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
-      "label": "3D model - GLB"
+      "label": "Portable 3D model - GLB"
     },
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
@@ -37,6 +45,70 @@
     "Iteration 1 / revision 1: 48/100 - Recognizable outfit and pose, but scalp gap, sock intersections, angular face contours, overly smooth ponytails and jagged neckline. Not near 95/100.",
     "Iteration 2 / revision 2: 62/100 - Scalp and sock defects fixed. Four views reviewed. Remaining: visible neck join, stiff hair, narrow face, floating straps and shoe saddle edges; resemblance remains stylized.",
     "Iteration 3 / revision 3: 68/100 - Five views reviewed. Equal-length leg joints, relaxed torso, neck attachment and shoe straps improved. Hair remains too stiff; blouse is too short and the face remains stylized.",
-    "Iteration 4 / revision 4: 70/100 - Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth."
-  ]
+    "Iteration 4 / revision 4: 70/100 - Four views reviewed. Blouse length, waistband height and scalp fit improved. Hair remains overly layered and the face needs more natural eyelids, lips and teeth.",
+    "Iteration 5 / revision 5: 72/100 - Five views reviewed. Continuous hair and wavy ponytails are improved. The larger smile exposes jagged face-opening edges; eyelid rims remain artificial. These are the next fixes.",
+    "Iteration 6 / revision 6: 72/100 - Five views reviewed. Mouth edge repaired and web export merged to 35 meshes. Eye reflections became too strong, so resemblance score is unchanged. Next: eye glare, smile curvature and fringe shape.",
+    "Iteration 7 / revision 7: 73/100 - Five views reviewed. Eye glare reduced and crown rounded. The smile still has too much dark opening; eye spacing, teeth, lips and smiling cheek contours need refinement.",
+    "Iteration 8 / revision 8: 74/100 - Five views reviewed. Rounded teeth, lips and softer brows improve the face. Remaining: eyes look too open, hair intersects the shoulder, cloth neckline is artificial, and the leg pose is not yet close enough.",
+    "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt."
+  ],
+  "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
+  "geometry": {
+    "revision": 9,
+    "leg_segments_metres": {
+      "L": {
+        "femur": 0.4449999736324782,
+        "tibia": 0.41500008568346336,
+        "hip": [
+          -0.06499999761581421,
+          0.03200000151991844,
+          0.9449999928474426
+        ],
+        "knee": [
+          0.019618958234786987,
+          -0.05896507948637009,
+          0.5176945328712463
+        ],
+        "ankle": [
+          -0.10000000149011612,
+          0.054999999701976776,
+          0.13699999451637268
+        ]
+      },
+      "R": {
+        "femur": 0.44500001598018707,
+        "tibia": 0.41499995412013,
+        "hip": [
+          0.07400000095367432,
+          0.04699999839067459,
+          0.949999988079071
+        ],
+        "knee": [
+          0.0393265075981617,
+          0.06377613544464111,
+          0.5066701769828796
+        ],
+        "ankle": [
+          0.019999999552965164,
+          0.014999999664723873,
+          0.0949999988079071
+        ]
+      }
+    },
+    "original_assets_only": true,
+    "photo_used_as_texture": false,
+    "mesh_objects": 132,
+    "curve_objects": 63,
+    "notes": "Both hidden sides and hands are authored; no pre-existing character meshes, texture scans or downloaded HDRIs.",
+    "web_export": {
+      "meshes": 42,
+      "vertices": 678276,
+      "triangles": 1326916
+    },
+    "lite_export": {
+      "meshes": 36,
+      "triangles": 496140,
+      "difference": "Fine fibre meshes omitted; original volume, directional surface maps, face, clothing and pose retained."
+    }
+  }
 }
