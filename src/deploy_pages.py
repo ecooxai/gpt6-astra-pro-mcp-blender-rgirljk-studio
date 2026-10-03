@@ -3,7 +3,7 @@ from pathlib import Path
 import shutil,json,subprocess
 root=Path(__file__).resolve().parents[1];dest=root/'build/github-pages';dest.mkdir(parents=True,exist_ok=True)
 s=json.loads((root/'preview/status.json').read_text())
-files=['index.html','viewer.js','status.json',s['model'],s['hero']]+[x['file'] for x in s['renders']]+[x['file'] for x in s.get('downloads',[])]
+files=['index.html','viewer.js','status.json',s['model'],s.get('detailModel',s['model']),s['hero']]+[x['file'] for x in s['renders']]+[x['file'] for x in s.get('downloads',[])]
 for old in dest.iterdir():
     if old.name!='.git':
         if old.is_dir():shutil.rmtree(old)

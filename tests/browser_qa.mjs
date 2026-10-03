@@ -4,7 +4,7 @@ try{
  browser=await chromium.launch({headless:true,executablePath:'/home/dev/.local/share/chromium/chromium-1243/chrome-linux64/chrome',args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
  for(const [name,width,height] of [['desktop',1440,1050],['mobile',390,844]]){
   const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1});page.setDefaultTimeout(120000);const errors=[],failed=[],controls=[];const entry={name,width,height,errors,failed,controlsTested:controls};
-  page.on('pageerror',e=>errors.push(String(e)));page.on('requestfailed',r=>failed.push({url:r.url(),reason:r.failure()?.errorText}));
+  page.on('pageerror',e=>errors.push(String(e)));page.on('requestfailed',r=>failed.push({url:r.url(),type:r.resourceType(),reason:r.failure()?.errorText}));
   try{
    const started=Date.now();await page.goto(process.env.PREVIEW_URL||'http://127.0.0.1:8867',{waitUntil:'networkidle',timeout:120000});await page.waitForFunction(()=>window.__viewer?.ready,null,{timeout:120000});await page.waitForTimeout(1200);
    Object.assign(entry,await page.evaluate(()=>({viewer:window.__viewer,overflow:document.documentElement.scrollWidth>innerWidth+1,canvas:{width:document.querySelector('canvas').width,height:document.querySelector('canvas').height},title:document.title})));entry.readyMs=Date.now()-started;

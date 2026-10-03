@@ -40,7 +40,7 @@ sole=material('Loafer soles • rubber',(.012,.013,.016),.52)
 leather=material('Loafers • black polished leather',(.009,.010,.014),.29)
 stitch=material('Leather stitching',(.072,.075,.086),.47)
 sock=material('Socks • ribbed midnight cotton',(.022,.030,.051),.85)
-sclera=material('Eyes • warm whites',(.62,.63,.60),.24)
+sclera=material('Eyes • warm whites',(.42,.43,.41),.30)
 irismat=material('Iris • deep brown',(.009,.006,.004),.26)
 irislight=material('Iris • amber fibres',(.041,.021,.009),.32)
 pupilmat=material('Pupil and limbal ring',(.0015,.0012,.0010),.21)
@@ -155,7 +155,7 @@ def face_y(x,z):
     y-=.0025*(gauss(x,z,.050,-.017,.025,.021)+gauss(x,z,-.050,-.017,.025,.021))
     if -.075<z<-.014 and abs(x)>.01:
         for fx,fz in [(.020,-.027),(.026,-.033),(.030,-.039),(.033,-.045),(.034,-.051),(.032,-.057),(.030,-.061)]:
-            y+=.00072*gauss(abs(x),z,fx,fz,.0024,.0042)
+            y+=.0011*gauss(abs(x),z,fx,fz,.0024,.0042)
     y-=.009*(gauss(x,z,.047,-.028,.026,.024)+gauss(x,z,-.047,-.028,.026,.024))
     y+=.010*(gauss(x,z,.037,.018,.022,.013)+gauss(x,z,-.037,.018,.022,.013))
     y-=.008*gauss(x,z,0,-.056,.036,.023)
@@ -172,7 +172,7 @@ for i in range(NZ-1):
     for j in range(NT):
         ids=(i*NT+j,i*NT+(j+1)%NT,(i+1)*NT+(j+1)%NT,(i+1)*NT+j);cx=sum(V[k][0] for k in ids)/4;cz=sum(V[k][2] for k in ids)/4;cy=sum(V[k][1] for k in ids)/4;u=cx/.034
         h=max(0,1-u*u)**.65
-        hole=abs(u)<1 and -.0675+.0115*u*u-.0015*h<cz<-.052-.004*u*u+.0015*h and cy<-.025
+        hole=abs(u)<1 and -.070+.017*u*u-.0015*h<cz<-.047-.006*u*u+.0015*h and cy<-.025
         for es in [-1,1]:
             eu=(cx-es*.037)/.0184;eh=max(0,1-eu*eu)**.62
             if abs(eu)<1 and cy<-.025 and .019+.0017*es*eu-.0076*eh<cz<.019+.0017*es*eu+.0109*eh:hole=True
@@ -210,35 +210,35 @@ for side in [-1,1]:
     for i,t in enumerate(np.linspace(-1,1,49)):
         x=cx+w*t;lift=.0017*side*t;h=max(0,1-t*t)**.62
         for j,v in enumerate(np.linspace(-1,1,13)):
-            z=cz+lift+v*(.0088 if v>0 else .0057)*h;verts.append((x,eyey(x,z),z))
+            z=cz+lift+v*(.0076 if v>0 else .0048)*h;verts.append((x,eyey(x,z),z))
     for i in range(48):
         for j in range(12):k=i*13+j;faces.append((k,k+13,k+14,k+1))
     mesh('Eye white • '+str(side),verts,faces,sclera,parent=head)
     # Iris disks follow the curvature of the eye, with a fine dark limbal ring.
-    for radius,mat,offset in [(.0074,pupilmat,.00025),(.0070,irismat,.00038),(.0030,pupilmat,.00058)]:
-        vs=[(cx,eyey(cx,cz+.0013)-offset,cz+.0013)]
+    for radius,mat,offset in [(.0082,pupilmat,.00025),(.0078,irismat,.00038),(.0036,pupilmat,.00058)]:
+        vs=[(cx,eyey(cx,cz+.0030)-offset,cz+.0030)]
         for t in np.linspace(0,2*pi,65)[:-1]:
-            xx=cx+radius*cos(t);zz=cz+.0013+radius*sin(t);u=(xx-cx)/w;h=max(0,1-u*u)**.62;zz=max(cz+.0017*side*u-.0057*h+.00015,min(cz+.0017*side*u+.0088*h-.00015,zz));vs.append((xx,eyey(xx,zz)-offset,zz))
+            xx=cx+radius*cos(t);zz=cz+.0030+radius*sin(t);u=(xx-cx)/w;h=max(0,1-u*u)**.62;zz=max(cz+.0017*side*u-.0048*h+.00015,min(cz+.0017*side*u+.0076*h-.00015,zz));vs.append((xx,eyey(xx,zz)-offset,zz))
         mesh('Iris or pupil • '+str(side),vs,[(0,j+1,(j+1)%64+1) for j in range(64)],mat,parent=head)
     for k in range(33):
         th=2*pi*k/33;pts=[]
         for rr in np.linspace(.0032,.0065,5):
-            x=cx+rr*cos(th);z=cz+.0013+rr*sin(th);u=(x-cx)/w;h=max(0,1-u*u)**.62;z=max(cz+.0017*side*u-.0057*h+.0002,min(cz+.0017*side*u+.0088*h-.0002,z));pts.append((x,eyey(x,z)-.00051,z))
+            x=cx+rr*cos(th);z=cz+.0030+rr*sin(th);u=(x-cx)/w;h=max(0,1-u*u)**.62;z=max(cz+.0017*side*u-.0048*h+.0002,min(cz+.0017*side*u+.0076*h-.0002,z));pts.append((x,eyey(x,z)-.00051,z))
         line('Iris fibres',pts,irislight,.00009,head)
     uvball('Eye catchlight',(cx-.0018,eyey(cx-.0018,cz+.0024)-.0008,cz+.0024),(.0011,.00045,.0011),highlight,head,20,12)
     uvball('Eye secondary glint',(cx+.0016,eyey(cx+.0016,cz-.0017)-.0007,cz-.0017),(.00042,.0003,.00042),highlight,head,16,8)
     for upper in [True,False]:
         vs=[];fs=[];edge=[]
         for i,tt in enumerate(np.linspace(-1,1,65)):
-            t=float(tt);x=cx+w*t;h=max(0,1-t*t)**.62;z0=cz+.0017*side*t+(.0088 if upper else -.0057)*h;y0=eyey(x,z0)-.0006;edge.append((x,y0,z0))
+            t=float(tt);x=cx+w*t;h=max(0,1-t*t)**.62;z0=cz+.0017*side*t+(.0076 if upper else -.0048)*h;y0=eyey(x,z0)-.0006;edge.append((x,y0,z0))
             for v in np.linspace(0,1,9):
                 v=float(v);xx=cx+(x-cx)*(1+.14*v);z=z0+(1 if upper else -1)*(.0065 if upper else .0050)*h*v
-                y=(1-v)*y0+v*(face_y(xx,z)-.00015)-(.0014 if upper else .0010)*sin(pi*v)*h;vs.append((xx,y,z))
+                y=(1-v)*y0+v*(face_y(xx,z)-.00015)-(.00065 if upper else .00055)*sin(pi*v)*h;vs.append((xx,y,z))
         for i in range(64):
             for j in range(8):k=i*9+j;fs.append((k,k+9,k+10,k+1) if upper else (k,k+1,k+10,k+9))
         mesh('Upper eyelid - continuous skin fold' if upper else 'Lower eyelid - soft skin rim',vs,fs,skin,parent=head)
         if upper:
-            line('Fine upper lash line',[(x,y-.0005,z-.0001) for x,y,z in edge],browmat,.00031,head,[.1+.9*sin(pi*i/64)**.65 for i in range(65)])
+            line('Fine upper lash line',[(x,y-.0005,z-.0001) for x,y,z in edge],browmat,.00052,head,[.1+.9*sin(pi*i/64)**.65 for i in range(65)])
             for k in range(14):
                 ii=7+k*4;x,y,z=edge[ii];sideways=side*(.0005+.0007*k/13)
                 line('Individual upper lashes',[(x,y-.0006,z),(x+sideways*.5,y-.0013,z+.0006),(x+sideways,y-.0018,z+.0011)],browmat,.00010,head,[1,.75,.10])
@@ -273,7 +273,7 @@ for mx,mz,mr in [(-.060,-.045,.00065),(-.011,.005,.00060),(.043,-.025,.00062)]:
 MW=.034
 verts=[];faces=[]
 for i,uu in enumerate(np.linspace(-1,1,89)):
-    u=float(uu);x=MW*u;top=-.052-.004*u*u;bottom=-.0675+.0115*u*u
+    u=float(uu);x=MW*u;top=-.047-.006*u*u;bottom=-.070+.017*u*u
     for tt in np.linspace(0,1,13):
         t=float(tt);z=bottom*(1-t)+top*t;verts.append((x,face_y(x,z)+.0055,z))
 for i in range(88):
@@ -284,7 +284,7 @@ lipshade.node_tree.nodes.get('Principled BSDF').inputs['Roughness'].default_valu
 for upper in [True,False]:
     vs=[];fs=[];colors=[]
     for i,uu in enumerate(np.linspace(-1,1,97)):
-        u=float(uu);x=MW*u;h=max(0,1-u*u)**.65;inner=(-.052-.004*u*u) if upper else (-.0675+.0115*u*u)
+        u=float(uu);x=MW*u;h=max(0,1-u*u)**.65;inner=(-.047-.006*u*u) if upper else (-.070+.017*u*u)
         thick=(.0043+.0010*(exp(-((u-.22)/.17)**2)+exp(-((u+.22)/.17)**2)))*h if upper else .0072*h
         for j,vv in enumerate(np.linspace(0,1,11)):
             v=float(vv);xx=x*(1+.045*v);z=inner+(1 if upper else -1)*thick*v;y=face_y(xx,z)-(.0014*(1-v)+.0003*v)-(.0026 if upper else .0032)*sin(pi*v)*h
@@ -295,7 +295,7 @@ for upper in [True,False]:
 gum=material('Gum - soft coral tissue',(.40,.135,.115),.53,sss=.12)
 vs=[];fs=[]
 for i,u in enumerate(np.linspace(-.88,.88,65)):
-    x=MW*u;top=-.052-.004*u*u
+    x=MW*u;top=-.047-.006*u*u
     for dz in [-.0015,.0015]:vs.append((x,face_y(x,top)+.0032,top+dz))
 for i in range(64):k=i*2;fs.append((k,k+2,k+3,k+1))
 mesh('Gum arch behind upper lip',vs,fs,gum,parent=head)
@@ -314,19 +314,31 @@ def dental_crown(name,x,top,width,height):
     for j in range(nt):a=1+(nr-1)*nt+j;b=1+(nr-1)*nt+(j+1)%nt;fs.append((a,b,base+(j+1)%nt,base+j))
     fs.append(tuple(base+j for j in range(nt-1,-1,-1)))
     return mesh(name,vs,fs,teeth,parent=head)
-widths=[w*1.03 for w in [.0046,.0055,.0065,.0076,.0076,.0065,.0055,.0046]]
-heights=[.0065,.009,.011,.0125,.0125,.011,.009,.0065];start=-(sum(widths)+.00015*7)/2
+widths=[w*1.07 for w in [.0046,.0055,.0065,.0076,.0076,.0065,.0055,.0046]]
+heights=[.008,.011,.015,.0185,.0185,.015,.011,.008];start=-(sum(widths)+.00015*7)/2
 for i,(w,h) in enumerate(zip(widths,heights)):
-    x=start+w/2;start+=w+.00015;u=x/MW;top=-.052-.004*u*u;dental_crown('Upper rounded crown '+str(i),x,top,w,h)
+    x=start+w/2;start+=w+.00015;u=x/MW;top=-.047-.006*u*u;dental_crown('Upper rounded crown '+str(i),x,top,w,h)
 for side in [-1,1]:
     ps=[]
     for t in np.linspace(0,1,14):
-        x=side*(.0335+.004*t);z=-.056+.003*t;ps.append((x,face_y(x,z)-.00020,z))
+        x=side*(.0335+.004*t);z=-.053+.003*t;ps.append((x,face_y(x,z)-.00020,z))
     line('Smile corner crease',ps,crease,.00017,head,[1-i/14 for i in range(14)])
 
 # One fitted hair mass with a swept hairline; all fibres are authored geometry.
 hairbase=material('Hair - natural dark underlying mass',(.007,.0046,.0038),.59)
 hairbase.node_tree.nodes.get('Principled BSDF').inputs['Specular IOR Level'].default_value=.22
+# Original directional surface detail: generated mathematical strands, no scan or photograph.
+HH=512;WW=1024;yy,xx=np.mgrid[0:HH,0:WW];uu=xx/WW;vv=yy/HH
+phase=2*pi*(uu*120+.15*np.sin(vv*pi*5)+.06*np.sin(vv*pi*17));ridge=np.sin(phase)+.35*np.sin(phase*2.7+1)+.15*np.sin(phase*6.3)
+normal=np.dstack((.20*np.cos(phase)+.07*np.cos(phase*2.7+1),.012*np.sin(vv*pi*5),np.ones_like(uu)));normal/=np.linalg.norm(normal,axis=2,keepdims=True)
+pixels=np.ones((HH,WW,4),np.float32);pixels[:,:,:3]=normal*.5+.5
+im=bpy.data.images.new('Original directional hair normal',width=WW,height=HH,alpha=True);im.colorspace_settings.name='Non-Color';im.pixels.foreach_set(pixels.ravel());im.filepath_raw=str(BUILD/'Original directional hair normal.png');im.file_format='PNG';im.save();im.pack()
+nt=hairbase.node_tree;tx=nt.nodes.new('ShaderNodeTexImage');tx.image=im;nm=nt.nodes.new('ShaderNodeNormalMap');nm.inputs['Strength'].default_value=.48;nt.links.new(tx.outputs['Color'],nm.inputs['Color']);nt.links.new(nm.outputs['Normal'],nt.nodes.get('Principled BSDF').inputs['Normal'])
+pixels[:,:,:3]=np.array([.078,.064,.057])[None,None,:]*(1+.16*ridge[:,:,None])
+im=bpy.data.images.new('Original tonal hair strands',width=WW,height=HH,alpha=True);im.pixels.foreach_set(pixels.ravel());im.filepath_raw=str(BUILD/'Original tonal hair strands.png');im.file_format='PNG';im.save();im.pack();tx=nt.nodes.new('ShaderNodeTexImage');tx.image=im;nt.links.new(tx.outputs['Color'],nt.nodes.get('Principled BSDF').inputs['Base Color'])
+nt.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.40;nt.nodes.get('Principled BSDF').inputs['Specular IOR Level'].default_value=.36;nt.nodes.get('Principled BSDF').inputs['Anisotropic'].default_value=.45
+del yy,xx,uu,vv,phase,ridge,normal,pixels
+
 for hm0 in hairmats:hm0.node_tree.nodes.get('Principled BSDF').inputs['Specular IOR Level'].default_value=.26
 HT=[-pi,-2,-1.6,-1.2,-.7,-.3,0,.35,.60,.90,1.2,1.6,2,pi]
 HZ=[-.085,-.065,-.038,-.010,.021,.032,.036,.056,.091,.029,-.010,-.036,-.060,-.085]
@@ -341,7 +353,17 @@ for i in range(nr-1):
     for j in range(ns):k=i*ns+j;q=i*ns+(j+1)%ns;F.append((k,k+ns,q+ns,q))
 V.append((0,.010,.166));tip=len(V)-1
 for j in range(ns):F.append((tip,j,(j+1)%ns))
-mesh('Hair - continuous swept scalp and fringe',V,F,hairbase,parent=head)
+hair_ob=mesh('Hair - continuous swept scalp and fringe',V,F,hairbase,parent=head)
+huv=[]
+for vi in range(len(V)):
+    if vi>=nr*ns:huv.append((.5,0));continue
+    tt=.012+.988*(vi//ns)/(nr-1);th=(2*pi*(vi%ns)/ns+pi)%(2*pi)-pi;target=th
+    for _ in range(8):target=th-.95*(1-tt)**.60*max(0,cos(target))
+    huv.append(((target/(2*pi)+.5)%1,tt))
+uvlay=hair_ob.data.uv_layers.new(name='HairUV')
+for poly in hair_ob.data.polygons:
+    us=[huv[hair_ob.data.loops[li].vertex_index][0] for li in poly.loop_indices];seam=max(us)-min(us)>.5
+    for li,u in zip(poly.loop_indices,us):uvlay.data[li].uv=(u+1 if seam and u<.5 else u,huv[hair_ob.data.loops[li].vertex_index][1])
 for k in range(850):
     target=2*pi*k/850-pi;pts=[]
     for tt in np.linspace(.020,1,42):
@@ -357,7 +379,7 @@ for k in range(85):
 def pony_center(side,t):
     ps=[Vector((side*.084,.042,-.031)),Vector((side*.139,.045,-.108)),Vector((side*.108,-.020,-.192)),Vector((side*.102,-.052,-.267))]
     t=float(t);c=(1-t)**3*ps[0]+3*(1-t)**2*t*ps[1]+3*(1-t)*t*t*ps[2]+t**3*ps[3]
-    c.x+=side*.008*sin(t*pi*3.4+.3)*sin(pi*min(t,1));c.y+=.008*sin(t*pi*4.1+side)*sin(pi*min(t,1));return c
+    c.x+=side*.008*sin(t*pi*3.4+.3)*sin(pi*min(t,1));c.y+=.008*sin(t*pi*4.1+side)*sin(pi*min(t,1));c.y-=.033*(t*t*(3-2*t));return c
 
 def pony_point(side,t,angle,mult=1):
     t=float(t);r=float(np.interp(t,[0,.18,.40,.65,.85,1.03],[.017,.030,.033,.027,.020,.0008]))
@@ -371,7 +393,12 @@ for side in [-1,1]:
         for j in range(nt):k=i*nt+j;q=i*nt+(j+1)%nt;F.append((k,k+nt,q+nt,q))
     F.append(tuple(range(nt)))
     F.append(tuple((nr-1)*nt+j for j in range(nt-1,-1,-1)))
-    mesh('Ponytail - naturally waved underlying volume '+str(side),V,F,hairbase,parent=head)
+    po=mesh('Ponytail - naturally waved underlying volume '+str(side),V,F,hairbase,parent=head)
+    puv=po.data.uv_layers.new(name='HairUV')
+    for poly in po.data.polygons:
+        us=[(po.data.loops[li].vertex_index%nt)/nt for li in poly.loop_indices];seam=max(us)-min(us)>.5
+        for li,u in zip(poly.loop_indices,us):
+            vi=po.data.loops[li].vertex_index;puv.data[li].uv=(u+1 if seam and u<.5 else u,(vi//nt)/(nr-1))
     for k in range(780):
         th=2*pi*k/780;end=random.uniform(.90,1.025);mult=random.uniform(1.008,1.038);phase=random.random()*pi*2;pts=[]
         for t in np.linspace(0,end,42):
@@ -384,24 +411,29 @@ for side in [-1,1]:
         line('Ponytail loose wisps',pts,hairmats[k%6],.000105,head,[max(.07,sin(pi*i/33))**.4 for i in range(34)])
     uvball('Ponytail tie',(side*.084,.042,-.034),(.024,.019,.007),webbing,head,32,16)
     for k in range(13):
-        off=(k-6)*.00075;pts=bez([(side*(.079+off),-.030,.005),(side*(.092+off),-.057,-.040),(side*(.057+off),-.069,-.100),(side*(.067+off),-.061,-.161-k*.001)],34)
+        off=(k-6)*.00018;pts=bez([(side*(.079+off),-.030,.005),(side*(.092+off),-.057,-.040),(side*(.057+off),-.069,-.100),(side*(.067+off),-.061,-.161-k*.001)],34)
         line('Soft face-framing strands',pts,hairmats[k%6],.00018,head,[.2+.8*(1-i/34)**.5 for i in range(34)])
 
-# Tailored blouse loft. Front opening is genuinely open over the chest mesh.
-TP=[(1.054,.118,.078),(1.073,.128,.083),(1.115,.123,.079),(1.170,.132,.085),(1.229,.145,.091),(1.285,.154,.085),(1.325,.161,.068),(1.348,.129,.055),(1.375,.051,.044)]
-V=[];F=[];rows=72;ns=128
-for i,z in enumerate(np.linspace(TP[0][0],TP[-1][0],rows)):
-    w=float(np.interp(z,[p[0] for p in TP],[p[1] for p in TP]));d=float(np.interp(z,[p[0] for p in TP],[p[2] for p in TP]));t=(z-1.054)/.321
-    for j in range(ns):
-        th=2*pi*j/ns;x=w*sin(th);front=cos(th);y=.005-d*front
-        wrinkle=.0009*sin(th*11+t*24)+.0005*sin(th*19-t*33)+.0011*sin(th*9+t*51)*exp(-((t-.13)/.20)**2)
-        pull=.0035*sin(th*6+t*15)*exp(-((t-.61)/.25)**2)
-        y-=(wrinkle+pull)*front;zz=z+.002*sin(th*8)*exp(-((t-.07)/.12)**2);V.append((x,y,zz))
+# Tailored blouse with an explicit continuous V opening, not deleted grid faces.
+TP=[(1.054,.118,.078),(1.073,.128,.083),(1.115,.123,.079),(1.170,.132,.085),(1.229,.145,.091),(1.285,.154,.085),(1.325,.158,.068),(1.348,.126,.055),(1.375,.051,.044)]
+def blouse_profile(z):
+    return smooth_profile(z,[p[0] for p in TP],[p[1] for p in TP]),smooth_profile(z,[p[0] for p in TP],[p[2] for p in TP])
+V=[];F=[];UV=[];edges=[[],[]];rows=92;ns=144
+for i,zz0 in enumerate(np.linspace(TP[0][0],TP[-1][0],rows)):
+    z=float(zz0);w,d=blouse_profile(z);t=(z-1.054)/.321;opening=max(0,z-1.301)*.68;angle=math.asin(min(.90,opening/w))
+    for j in range(ns+1):
+        th=angle+(2*pi-2*angle)*j/ns;x=w*sin(th);front=cos(th);y=.005-d*front
+        wrinkle=.0008*sin(th*11+t*24)+.0004*sin(th*19-t*33)+.0014*sin(th*9+t*51)*exp(-((t-.13)/.20)**2)
+        tension=0
+        for offset,amp in [(0,.0035),(.033,-.0023),(.066,.0025)]:tension+=amp*exp(-((z-(1.084+.80*abs(x)+offset))/.014)**2)*exp(-((abs(x)-.070)/.082)**2)
+        y-=(wrinkle+tension)*max(front,0)+wrinkle*min(front,0);zz=z+.0016*sin(th*8)*exp(-((t-.07)/.12)**2);V.append((x,y,zz));UV.append((j/ns,t))
+        if j==0:edges[0].append((x,y-.0004,zz))
+        if j==ns:edges[1].append((x,y-.0004,zz))
 for i in range(rows-1):
-    for j in range(ns):
-        ids=(i*ns+j,i*ns+(j+1)%ns,(i+1)*ns+(j+1)%ns,(i+1)*ns+j);x=sum(V[k][0] for k in ids)/4;z=sum(V[k][2] for k in ids)/4;y=sum(V[k][1] for k in ids)/4
-        if not (y<-.025 and z>1.301 and abs(x)<(z-1.301)*.72):F.append(ids)
-shirt=mesh('Blouse • fitted woven cloth and natural folds',V,F,white);md=shirt.modifiers.new('Cotton thickness','SOLIDIFY');md.thickness=.0012
+    for j in range(ns):k=i*(ns+1)+j;F.append((k,k+1,k+ns+2,k+ns+1))
+shirt=mesh('Blouse - continuous tailored cotton',V,F,white,uv=UV);md=shirt.modifiers.new('Cotton thickness','SOLIDIFY');md.thickness=.0012
+for side,edge in enumerate(edges):line('Fine neckline topstitch '+str(side),[p for p in edge if p[2]>1.302],seamwhite,.00024)
+
 # Open spread collar, placket and small buttons.
 for s in [-1,1]:
     pts=[(s*.037,-.044,1.391),(s*.064,-.040,1.367),(s*.080,-.070,1.314),(s*.050,-.100,1.331),(s*.023,-.080,1.346)]
@@ -447,12 +479,10 @@ def strip(name,centers,widths,mat,thick=.002,uvscale=1):
 for s in [-1,1]:strip('Tie • loose neck band '+str(s),[(s*.044,-.059,1.357),(s*.036,-.086,1.317),(s*.017,-.102,1.282)],[.007,.009,.013],tiemat,uvscale=.35)
 strip('Tie • dimensional loose knot',[(-.006,-.108,1.287),(-.002,-.116,1.264),(.002,-.111,1.245)],[.025,.019,.010],tiemat,thick=.004,uvscale=.20)
 strip('Tie • long striped blade',[(.002,-.111,1.255),(-.009,-.106,1.187),(-.014,-.102,1.10),(-.015,-.115,1.011),(-.011,-.130,.950)],[.012,.022,.025,.027,.029,.030,.031,.031,.0007],tiemat,uvscale=1.20)
-for sgn in [-1,1]:
-    strip('Folded neckline edge '+str(sgn),[(sgn*.052,-.046,1.376),(sgn*.030,-.077,1.344),(sgn*.012,-.081,1.318),(sgn*.002,-.079,1.300)],[.005,.005,.005,.006],white,thick=.0018)
 # Pleated tartan skirt, with sharp folded radial profiles and rounded cloth edges.
 V=[];F=[];UV=[];nr=40;nt=320
 for i,t in enumerate(np.linspace(0,1,nr)):
-    z=1.061-.320*t;wx=.118+.083*(t**.83);dy=.087+.063*(t**.86);amp=.0015+.011*t**.72
+    z=1.061-.320*t;wx=.118+.094*(t**.83);dy=.087+.063*(t**.86);amp=.0015+.011*t**.72
     for j in range(nt+1):
         th=pi+2*pi*j/nt;fold=.68*cos(20*th)+.32*cos(40*th);r=amp*fold;x=(wx+r)*sin(th);y=.012-(dy+r*.85)*cos(th);zz=z+.003*sin(th*3+.3)*t**2;V.append((x,y,zz));UV.append((j/nt*7.5,(1-t)*2.4))
 for i in range(nr-1):
@@ -487,7 +517,7 @@ line('Backpack top handle',bez([(-.037,.159,1.352),(-.035,.164,1.394),(.035,.164
 for k in range(4):line('Shirt embroidered mark',[(.075+k*.0014,-.087,1.254),(.079+k*.0014,-.088,1.262),(.077+k*.0014,-.087,1.266)],material('Embroidery blue '+str(k),(.26,.46,.67),.9),.0005)
 # Fit garment proportions: longer blouse and lower waistband; skirt hem unchanged.
 def fitted_body_z(z):
-    return float(np.interp(z,[.50,.741,1.061,1.250,1.340,1.375,1.400,1.600],[.50,.741,1.035,1.262,1.376,1.397,1.409,1.600]))
+    return float(np.interp(z,[.50,.741,1.061,1.250,1.340,1.375,1.400,1.600],[.50,.720,1.035,1.262,1.376,1.397,1.409,1.600]))
 bpy.context.view_layer.update()
 for ob in list(CHAR.objects):
     if ob.parent is not None or ob.type not in {'MESH','CURVE'} or ob.name.startswith('Neck'):continue
@@ -513,8 +543,8 @@ def knee_ik(hip,ankle,pole,L1=.445,L2=.415):
     if not abs(L1-L2)<D<L1+L2:raise ValueError('Unreachable ankle target')
     a=(L1*L1-L2*L2+D*D)/(2*D);h=sqrt(max(0,L1*L1-a*a));perp=Vector(pole);perp=(perp-axis*perp.dot(axis)).normalized();return hip+axis*a+perp*h
 
-LEGS=[{'side':'L','hip':(-.065,.032,.945),'knee':(-.015,-.073,.510),'ankle':(-.085,-.020,.113)}, {'side':'R','hip':(.074,.047,.950),'knee':(.059,.035,.502),'ankle':(.020,.015,.095)}]
-for leg in LEGS:leg['knee']=tuple(knee_ik(leg['hip'],leg['ankle'],(.55,-1,0) if leg['side']=='L' else (-.2,1,0)))
+LEGS=[{'side':'L','hip':(-.065,.032,.945),'knee':(-.015,-.073,.510),'ankle':(-.100,.055,.137)}, {'side':'R','hip':(.074,.047,.950),'knee':(.059,.035,.502),'ankle':(.020,.015,.095)}]
+for leg in LEGS:leg['knee']=tuple(knee_ik(leg['hip'],leg['ankle'],(1,-1,0) if leg['side']=='L' else (-.2,1,0)))
 measurements={}
 for d in LEGS:
     hip,knee,ankle=map(Vector,[d['hip'],d['knee'],d['ankle']]);s=d['side'];mid=hip.lerp(knee,.42);below=knee.lerp(ankle,.35)
@@ -524,8 +554,8 @@ for d in LEGS:
     tube('Sock • fine ribs '+s,[top,calf,low,ankle,end],[.0376,.0435,.029,.0265,.025],sock,n=70,sides=144,ratio=.92,ribs=.011)
     cuffend=top.lerp(calf,.20);tube('Sock • ribbed top band '+s,[top,cuffend],[.0385,.0405],sock,n=8,sides=144,ratio=.92,ribs=.012)
 # Leather loafers: separate sole, stitched vamp, raised penny strap and open collar.
-for side,cx,cy,base,yaw in [('L',-.085,-.051,.014,-.13),('R',.020,-.013,.005,.10)]:
-    shoe=bpy.data.objects.new('Loafer assembly '+side,None);CHAR.objects.link(shoe);shoe.location=(cx,cy,base);shoe.rotation_euler.z=yaw
+for side,cx,cy,base,yaw in [('L',-.100,.033,.055,-.13),('R',.020,-.013,.005,.10)]:
+    shoe=bpy.data.objects.new('Loafer assembly '+side,None);CHAR.objects.link(shoe);shoe.location=(cx,cy,base);shoe.rotation_euler.z=yaw;shoe.rotation_euler.x=.15 if side=='L' else 0
     nt=96
     def outline(th):return Vector((.044*sin(th)*(1+.11*cos(th)),-.032-.102*cos(th),0))
     V=[];F=[]
@@ -614,6 +644,16 @@ if not args.no_export:
     bpy.context.view_layer.objects.active=hm
     bpy.ops.export_scene.gltf(filepath=str(BUILD/(base+f'_r{args.revision:02d}.glb')),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_cameras=False,export_lights=False,export_extras=True)
     print('EXPORT_COMPLETE',str(BUILD/(base+f'_r{args.revision:02d}.glb')),flush=True)
+    bpy.ops.object.select_all(action='DESELECT')
+    lite_meshes=[]
+    for ob in CHAR.objects:
+        if ob.type=='MESH' and not any('espresso' in m.name for m in ob.data.materials if m):ob.select_set(True);lite_meshes.append(ob)
+    bpy.context.view_layer.objects.active=hm
+    bpy.ops.export_scene.gltf(filepath=str(BUILD/(base+f'_lite_r{args.revision:02d}.glb')),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_cameras=False,export_lights=False,export_extras=True)
+    metrics['lite_export']={'meshes':len(lite_meshes),'triangles':sum(sum(max(0,len(p.vertices)-2) for p in ob.data.polygons) for ob in lite_meshes),'difference':'Fine fibre meshes omitted; original volume, directional surface maps, face, clothing and pose retained.'}
+    (BUILD/f'geometry_metrics_r{args.revision:02d}.json').write_text(json.dumps(metrics,indent=2))
+    print('LITE_EXPORT_COMPLETE',json.dumps(metrics['lite_export']),flush=True)
+
 for name in args.views.split(','):
     if name not in views:continue
     setview(name);scene.render.filepath=str(OUT/f'{name}_r{args.revision:02d}.png');print('RENDER_BEGIN',name,flush=True);bpy.ops.render.render(write_still=True);print('RENDER_COMPLETE',name,flush=True)
