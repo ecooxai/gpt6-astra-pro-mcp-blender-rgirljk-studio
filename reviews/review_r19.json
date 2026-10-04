@@ -1,0 +1,18 @@
+{
+  "revision": 19,
+  "iteration": 19,
+  "score": 81,
+  "accepted": true,
+  "notes": "All six views reviewed. The chin transitions into the neck without the bright lower-edge artifact; the original skin atlas preserves the authored pigments; the portrait has a seamless background. The refined hair, collar and grounded pose improve the checkpoint, but facial likeness and cloth still remain stylized.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:58:58+00:00",
+  "sourceCommit": "09aca9db41bb09ee7cbb0b5b6170f7486b71fb13",
+  "evidence": [
+    "reviews/renders/r19/front.jpg",
+    "reviews/renders/r19/face.jpg",
+    "reviews/renders/r19/threequarter.jpg",
+    "reviews/renders/r19/back.jpg",
+    "reviews/renders/r19/side.jpg",
+    "reviews/renders/r19/face_side.jpg"
+  ]
+}

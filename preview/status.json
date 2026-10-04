@@ -1,8 +1,8 @@
 {
   "revision": 13,
   "score": 78,
-  "iterations": 18,
-  "state": "Refining candidate",
+  "iterations": 19,
+  "state": "Reviewed candidate; export pending",
   "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
   "renders": [
@@ -25,7 +25,7 @@
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-04T10:49:52+00:00",
+  "updated": "2026-10-04T10:58:58+00:00",
   "hero": "front_r13.png",
   "downloads": [
     {
@@ -67,7 +67,8 @@
     "Iteration 15 / revision 15: 78/100 \u2014 Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13.",
     "Iteration 16 / revision 16: 78/100 \u2014 Six views reviewed. Curved lapels are better than the flat panels, but the side view reveals that the chest was excluded from the garment-height warp and the tie neck band intersects the collar. These are corrected before promotion.",
     "Iteration 17 / revision 17: 79/100 \u2014 Six views reviewed. The chest now follows the blouse fit, tie/collar intersections are fixed, and layered ponytails improve the silhouette. The forehead wisp is too thick and face-framing locks are too regular; refine these before promotion.",
-    "Iteration 18 / revision 18: 80/100 \u2014 Six views reviewed. Thinner forehead wisps, tapered framing curls and clean collar attachment improve resemblance. Perspective framing is useful, but its studio horizon line needs removal and the face remains stylized. Continue with the chin/neck junction and original skin finishing."
+    "Iteration 18 / revision 18: 80/100 \u2014 Six views reviewed. Thinner forehead wisps, tapered framing curls and clean collar attachment improve resemblance. Perspective framing is useful, but its studio horizon line needs removal and the face remains stylized. Continue with the chin/neck junction and original skin finishing.",
+    "Iteration 19 / revision 19: 81/100 \u2014 All six views reviewed. The chin transitions into the neck without the bright lower-edge artifact; the original skin atlas preserves the authored pigments; the portrait has a seamless background. The refined hair, collar and grounded pose improve the checkpoint, but facial likeness and cloth still remain stylized."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
@@ -129,16 +130,16 @@
     }
   },
   "candidate": {
-    "revision": 18,
-    "score": 80,
-    "accepted": false,
-    "notes": "Six views reviewed. Thinner forehead wisps, tapered framing curls and clean collar attachment improve resemblance. Perspective framing is useful, but its studio horizon line needs removal and the face remains stylized. Continue with the chin/neck junction and original skin finishing.",
+    "revision": 19,
+    "score": 81,
+    "accepted": true,
+    "notes": "All six views reviewed. The chin transitions into the neck without the bright lower-edge artifact; the original skin atlas preserves the authored pigments; the portrait has a seamless background. The refined hair, collar and grounded pose improve the checkpoint, but facial likeness and cloth still remain stylized.",
     "files": [
-      "front_r18.png",
-      "face_r18.png",
-      "threequarter_r18.png",
-      "back_r18.png",
-      "side_r18.png"
+      "front_r19.png",
+      "face_r19.png",
+      "threequarter_r19.png",
+      "back_r19.png",
+      "side_r19.png"
     ]
   },
   "qa": {
