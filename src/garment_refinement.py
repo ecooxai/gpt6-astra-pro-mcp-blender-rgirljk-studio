@@ -4,13 +4,13 @@ V=[];F=[];nt=96
 for j,theta in enumerate(np.linspace(.85,2*pi-.85,nt)):
     t=float(theta)
     for k,v in enumerate(np.linspace(0,1,7)):
-        V.append((.005+.043*sin(t),.010-.043*cos(t),1.368+.020*float(v)+.001*cos(t)-.005*max(0,cos(t))**2))
+        V.append((.043*sin(t),.010-.043*cos(t),1.368+.020*float(v)+.001*cos(t)-.005*max(0,cos(t))**2))
 for j in range(nt-1):
     for k in range(6):i=j*7+k;F.append((i,i+7,i+8,i+1))
 stand=mesh("Collar - continuous curved neck stand",V,F,white)
 m=stand.modifiers.new("Cotton stand thickness","SOLIDIFY");m.thickness=.0015
 for s in [-1,1]:
-    p0=Vector((s*.037,-.020,1.389));p1=Vector((s*.063,-.035,1.369))
+    p0=Vector((s*.0325,-.0184,1.386));p1=Vector((s*.063,-.035,1.369))
     p2=Vector((s*.025,-.078,1.342));p3=Vector((s*.079,-.083,1.313))
     V=[];F=[];uv=[];nu=24;nv=32
     for i,v in enumerate(np.linspace(0,1,nv)):

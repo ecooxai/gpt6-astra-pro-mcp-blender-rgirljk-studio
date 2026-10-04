@@ -22,7 +22,7 @@ try:
     metrics=json.loads((root/'build'/f'geometry_metrics_r{rev:02d}.json').read_text());legs=metrics['leg_segments_metres']
     errors={bone:abs(legs['L'][bone]-legs['R'][bone]) for bone in ['femur','tibia']};assert max(errors.values())<1e-5,errors
     source_dir=root/'build/jobs'/f'r{rev:03d}'/'source'
-    source='\n'.join((source_dir/n).read_text() for n in ['build_character.py','portrait_surface.py','portrait_details.py','fit_backpack.py'])
+    source='\n'.join(f.read_text() for f in source_dir.glob('*.py') if f.name not in ['model_qa.py','format_qa.py'])
     assert not any(token in source for token in ['bpy.ops.import_scene','bpy.data.images.load','bpy.data.libraries.load'])
     report['checks']={'fourGLBVariantsValidated':True,'decodedWorldBounds':True,'embeddedOriginalTexturesOnly':True,'noStudioLightsOrCameras':True,'noExternalArtImportCallsInModelSource':True,'compressionBoundsDifferenceMetres':deviations,'legLengthDifferenceMetres':errors}
     report['passed']=True

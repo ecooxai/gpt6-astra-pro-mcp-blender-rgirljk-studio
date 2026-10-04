@@ -202,7 +202,7 @@ HZ=[-.085,-.065,-.038,-.010,.021,.032,.036,.056,.091,.029,-.010,-.036,-.060,-.08
 def hairpoint(th,t,extra=0):
     th=(th+pi)%(2*pi)-pi;bot=smooth_profile(th,HT,HZ);end=math.acos(max(-.99,min(.99,(bot-.020)/.140)));pol=t*end;zs=.020+.140*cos(pol);w,d=shape(zs);back=(1-cos(th))/2;pad=(.007+.010*back)*max(.03,sin(pol))+extra
     cy=.010-.020*exp(-((zs+.108)/.022)**2);zz=zs+.006+(.00035*sin(th*51+1.2)+.00030*sin(th*97+.7))*t**18
-    flow=th-.95*max(0,1-t)**.60*max(0,cos(th));pad+=.00075*(cos(flow*45+t*.4)+.35*cos(flow*87-t*.6))*max(0,sin(pi*t))**.7
+    flow=th-.95*max(0,1-t)**.60*max(0,cos(th));pad+=.00032*(.65*cos(flow*31+t*.4)+.40*cos(flow*57+.7)+.30*cos(flow*83-t*.3))*max(0,sin(pi*t))**.7
     return Vector(((w+pad)*sin(th),cy-(d+pad)*cos(th),zz))
 V=[];F=[];nr=58;ns=180
 for t in np.linspace(.012,1,nr):
@@ -481,9 +481,10 @@ area('Fill • cool softbox',(2.1,-2.0,2.5),85,2.4,(.81,.88,1))
 area('Hair rim • long warm highlight',(.8,1.6,3.2),235,1.2,(1,.94,.87))
 area('Face catchlight',(-.25,-2.1,1.9),8,.35,(1,.95,.90),target=(0,0,1.5))
 camdata=bpy.data.cameras.new('Portrait camera');cam=bpy.data.objects.new('Portrait camera',camdata);STUDIO.objects.link(cam);scene.camera=cam;camdata.type='ORTHO';camdata.lens=70
-views={'front':((0,-5.3,2.02),(0,0,.844),1.78,(2,3)),'face':((.05,-4.2,1.65),(.05,-.015,1.525),.43,(1,1)),'threequarter':((3.4,-5.3,2.3),(0,0,.865),1.83,(2,3)),'back':((0,5.3,2.1),(0,0,.865),1.83,(2,3)),'side':((5.3,-.05,2.0),(0,0,.865),1.83,(2,3))}
+views={'front':((0,-5.25,1.70),(0,0,.86),1.78,(2,3)),'face':((.05,-4.2,1.65),(.05,-.015,1.525),.43,(1,1)),'threequarter':((3.4,-5.3,2.3),(0,0,.865),1.83,(2,3)),'back':((0,5.3,2.1),(0,0,.865),1.83,(2,3)),'side':((5.3,-.05,2.0),(0,0,.865),1.83,(2,3))}
 views['face_side']=((.85,-1.15,1.67),(.04,-.005,1.535),.43,(1,1))
 def setview(name):
+    camdata.type='PERSP' if name=='front' else 'ORTHO';camdata.lens=70;camdata.sensor_fit='VERTICAL';camdata.sensor_height=24
     pos,target,scale,aspect=views[name];cam.location=pos;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler();camdata.ortho_scale=scale;scene.render.resolution_y=args.size;scene.render.resolution_x=round(args.size*aspect[0]/aspect[1])
 setview('front')
 base='gpt6_astra_pro_mcp_blender_rgirljk'

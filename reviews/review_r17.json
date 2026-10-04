@@ -1,0 +1,17 @@
+{
+  "revision": 17,
+  "iteration": 17,
+  "score": 79,
+  "accepted": false,
+  "notes": "Six views reviewed. The chest now follows the blouse fit, tie/collar intersections are fixed, and layered ponytails improve the silhouette. The forehead wisp is too thick and face-framing locks are too regular; refine these before promotion.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:42:34+00:00",
+  "sourceCommit": "52ab246b9346b01a6b269847bb5251ba6871e68f",
+  "evidence": [
+    "reviews/renders/r17/front.jpg",
+    "reviews/renders/r17/face.jpg",
+    "reviews/renders/r17/threequarter.jpg",
+    "reviews/renders/r17/back.jpg",
+    "reviews/renders/r17/side.jpg"
+  ]
+}

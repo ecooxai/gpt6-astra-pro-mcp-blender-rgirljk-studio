@@ -2,8 +2,8 @@
 from mathutils.bvhtree import BVHTree
 hair_bvh=BVHTree.FromPolygons([v.co.copy() for v in hair_ob.data.vertices],[tuple(f.vertices) for f in hair_ob.data.polygons],all_triangles=False)
 lockmat=hairbase.copy();lockmat.name="Groom - layered dark locks"
-lockmat.node_tree.nodes.get("Principled BSDF").inputs["Roughness"].default_value=.40
-lockmat.node_tree.nodes.get("Principled BSDF").inputs["Specular IOR Level"].default_value=.31
+lockmat.node_tree.nodes.get("Principled BSDF").inputs["Roughness"].default_value=.48
+lockmat.node_tree.nodes.get("Principled BSDF").inputs["Specular IOR Level"].default_value=.27
 flymat=material("Groom - airy dark fibres",(.008,.0065,.0065),.42)
 flymat.node_tree.nodes.get("Principled BSDF").inputs["Specular IOR Level"].default_value=.28
 
@@ -27,24 +27,24 @@ def forehead_lock(name,points,width,phase=0):
     ob=mesh(name,vs,fs,lockmat,parent=head,uv=uv)
     mod=ob.modifiers.new("Fine hair lock thickness","SOLIDIFY");mod.thickness=.00013
     return ob
-for k in range(5):
+for k in range(3):
     d=(k-2)*.0013
-    forehead_lock("Fringe - attached sweeping wisp "+str(k),[(.050+d,.129),(.074+d,.089),(.049+d,.048),(.020+k*.002,.029+k*.001)],.0028-k*.00025,.17+k*.05)
+    forehead_lock("Fringe - attached sweeping wisp "+str(k),[(.050+d,.129),(.074+d,.089),(.049+d,.048),(.018+k*.004,.028+k*.003)],.0010-k*.00013,.17+k*.05)
 # Replace the old packed, straight face-framing strips with individually tapered curves.
 for ob in list(CHAR.objects):
     if ob.name.startswith("Soft face-framing strands"):bpy.data.objects.remove(ob,do_unlink=True)
 for side in [-1,1]:
-    for k in range(5):
-        delta=(k-2)*.0013;ps=bez([(side*(.080+delta),0,.020),(side*(.089+delta),0,-.037),(side*(.064+delta),0,-.105),(side*(.067+delta),0,-.162-k*.006)],62)
+    for k in range(3):
+        delta=(k-2)*.0013;ps=bez([(side*(.080+delta),0,.020),(side*(.098+delta),0,-.037),(side*(.047+delta),0,-.105),(side*(.060+delta),0,-.159-k*.013)],62)
         vs=[];fs=[];uv=[];strandpts=[]
         for i,c in enumerate(ps):
             t=i/61
             if c.z>-.107:y=front_surface(c.x,c.z)-.0013
             else:
                 blend=min(1,(-c.z-.107)/.045);y=front_surface(c.x,-.107)*(1-blend)+(-.073+.006*sin(t*9+side))*blend-.0013
-            c.y=y;c.x+=side*.0016*sin(t*10+k*.2)*t*t
+            c.y=y;c.x+=side*.0030*sin(t*10+k*.7)*t*t
             tangent=(ps[min(61,i+1)]-ps[max(0,i-1)]).normalized();axis=Vector((1,0,0));axis=(axis-tangent*axis.dot(tangent)).normalized()
-            w=(.0008+.0002*k)*(1-t)**.65*sin(pi*min(.999,t*1.2+.01))**.25
+            w=(.00045+.00013*k)*(1-t)**.65*sin(pi*min(.999,t*1.2+.01))**.25
             for j,u in enumerate(np.linspace(-1,1,5)):
                 q=c+axis*float(u)*w;q.y-=.0003*(1-u*u);vs.append(q);uv.append((.3+k*.07+float(u)*.003,t))
             strandpts.append(c)
