@@ -1,10 +1,11 @@
 """Original anatomical detail fitted to portrait_surface.py."""
 neck=tube("Neck and covered upper chest",[(-.002,.014,1.304),(.005,.011,1.367),(.006,.012,1.476)],[.053,.0355,.034],skin,n=40,sides=64,ratio=.89)
+earskin=material("Ears - warm translucent skin",(.56,.29,.23),.49,sss=.23)
 for s in [-1,1]:
-    uvball("Ear "+str(s),(s*.086,.010,-.014),(.014,.010,.029),skin,head)
+    uvball("Ear "+str(s),(s*.086,.010,-.014),(.014,.010,.029),earskin,head)
     uvball("Ear concha "+str(s),(s*.091,-.0005,-.014),(.006,.0025,.015),earinner,head,28,16)
     ep=[(s*(.088+.010*sin(t)),-.002-.002*sin(t),-.012+.024*cos(t)) for t in np.linspace(-.2,pi*1.7,56)]
-    line("Ear helix",ep,skin,.0022,head)
+    line("Ear helix",ep,earskin,.0022,head)
     cx=s*EC;vs=[(cx,eye_y(s,cx,EZ),EZ)];fs=[];nr=14
     for i in range(1,nr+1):
         r=i/nr
@@ -15,7 +16,15 @@ for s in [-1,1]:
     for i in range(nr-1):
         for j in range(BN):
             k=1+i*BN+j;q=1+i*BN+(j+1)%BN;fs.append((k,k+BN,q+BN,q))
-    mesh("Curved almond eye white "+str(s),vs,fs,sclera,parent=head)
+    eyemat=sclera.copy();eyemat.name="Eye whites - subtle lid occlusion "+str(s)
+    nt=eyemat.node_tree;cn=nt.nodes.new("ShaderNodeVertexColor");cn.layer_name="Col"
+    nt.links.new(cn.outputs["Color"],nt.nodes.get("Principled BSDF").inputs["Base Color"])
+    ob=mesh("Curved almond eye white "+str(s),vs,fs,eyemat,parent=head);cc=[]
+    for x,y,z in vs:
+        u=(x-cx)/EW;mid=EZ+.0015*s*u;hh=max(.00015,(.0070 if z>=mid else .0042)*max(0,1-u*u)**.59)
+        v=(z-mid)/hh;shade=(1-.28*abs(u)**3)*(1-.27*max(0,v)**2)
+        col=np.array([.36,.348,.326])*shade;cc.append((*col,1))
+    ca=ob.data.color_attributes.new(name="Col",type="FLOAT_COLOR",domain="POINT");ca.data.foreach_set("color",np.array(cc,dtype=np.float32).ravel())
     icz=EZ+.0018
     def clipped_iris_z(x,z):
         u=(x-cx)/EW;h=max(0,1-u*u)**.59;mid=EZ+.0015*s*u
@@ -49,7 +58,7 @@ for s in [-1,1]:
         t=-.95+1.9*k/57;x=cx+.024*t;z=.039+.005*(1-t*t)+.0012*s*t+random.uniform(-.001,.001)
         pp=[(x,face_y(x,z)-.00023,z),(x+s*.0007,face_y(x+s*.0007,z+.0012)-.00025,z+.0012)]
         line("Natural brow filaments",pp,hairmats[k%3],.00007,head,[.65,.06])
-    nostrilmat=material("Nostril inner tissue "+str(s),(.055,.017,.013),.64)
+    nostrilmat=material("Nostril inner tissue "+str(s),(.085,.030,.021),.66)
     vs=[(s*.0115,face_y(s*.0115,-.033)+.0055,-.034)];fs=[];nr=8;na=BN
     for i in range(1,nr+1):
         r=i/nr

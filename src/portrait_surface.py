@@ -14,7 +14,7 @@ def shape(z):
         w=capw*(1-t)+w*t;d=capd*(1-t)+d*t
     return max(.0005,w),max(.0005,d)
 def skin_color(x,z):
-    b=.11*(gauss(x,z,.048,-.029,.025,.023)+gauss(x,z,-.048,-.029,.025,.023))
+    b=.18*(gauss(x,z,.048,-.029,.025,.023)+gauss(x,z,-.048,-.029,.025,.023))
     c=np.array([BASE[0]+b*.16,BASE[1]-b*.13,BASE[2]-b*.035])
     for es in [-1,1]:
         t=(x-es*EC)/.024
@@ -56,13 +56,13 @@ def mouth_xz(a,outer=False):
     return x,z
 
 def nostril_xz(side,a,outer=False):
-    rx=.0052 if outer else .0033;rz=.0030 if outer else .00145
+    rx=.0044 if outer else .0024;rz=.0026 if outer else .0010
     x=side*.0115+rx*cos(a);z=-.033+rz*sin(a)-side*.18*(x-side*.0115)
     return x,z
 
 def in_hole(x,z):
     for side in [-1,1]:
-        u=(x-side*.0115)/.0052;v=(z+.033+side*.18*(x-side*.0115))/.0030
+        u=(x-side*.0115)/.0044;v=(z+.033+side*.18*(x-side*.0115))/.0026
         if u*u+v*v<1:return True
     for s in [-1,1]:
         u=(x-s*EC)/.0232

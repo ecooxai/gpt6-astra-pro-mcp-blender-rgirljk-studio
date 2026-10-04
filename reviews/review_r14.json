@@ -1,0 +1,17 @@
+{
+  "revision": 14,
+  "iteration": 14,
+  "score": 78,
+  "accepted": false,
+  "notes": "Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:10:34+00:00",
+  "sourceCommit": "28c88f91111d150ecb5956a716249bbd8a2ae0d4",
+  "evidence": [
+    "reviews/renders/r14/front.jpg",
+    "reviews/renders/r14/face.jpg",
+    "reviews/renders/r14/threequarter.jpg",
+    "reviews/renders/r14/back.jpg",
+    "reviews/renders/r14/side.jpg"
+  ]
+}

@@ -473,17 +473,18 @@ metrics={'revision':args.revision,'leg_segments_metres':measurements,'original_a
 scene=bpy.context.scene;scene.render.engine='CYCLES';scene.cycles.device='CPU';scene.cycles.samples=args.samples;scene.cycles.use_denoising=True;scene.cycles.use_adaptive_sampling=True;scene.cycles.adaptive_threshold=.045;scene.cycles.max_bounces=7;scene.cycles.diffuse_bounces=3;scene.cycles.glossy_bounces=4;scene.cycles.transparent_max_bounces=4
 scene.render.image_settings.file_format='PNG';scene.render.image_settings.color_mode='RGBA';scene.render.film_transparent=False;scene.render.resolution_percentage=100
 scene.view_settings.view_transform='AgX';scene.view_settings.look='AgX - Medium High Contrast';scene.view_settings.exposure=-.05
-world=bpy.data.worlds.new('Studio atmosphere');scene.world=world;world.use_nodes=True;world.node_tree.nodes.get('Background').inputs[0].default_value=(.38,.44,.56,1);world.node_tree.nodes.get('Background').inputs[1].default_value=.27
+world=bpy.data.worlds.new('Studio atmosphere');scene.world=world;world.use_nodes=True;world.node_tree.nodes.get('Background').inputs[0].default_value=(.38,.44,.56,1);world.node_tree.nodes.get('Background').inputs[1].default_value=.12
 floor=material('Studio floor',(.10,.125,.16),.83)
 bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.004));ob=bpy.context.object;ob.name='STUDIO • seamless backdrop';move_col(ob,STUDIO);ob.data.materials.append(floor)
 def area(name,loc,power,size,col,target=(0,0,1)):
     data=bpy.data.lights.new(name,'AREA');data.energy=power;data.shape='DISK';data.size=size;data.color=col;o=bpy.data.objects.new(name,data);STUDIO.objects.link(o);o.location=loc;o.rotation_euler=(Vector(target)-o.location).to_track_quat('-Z','Y').to_euler()
-area('Key • large warm softbox',(-2.2,-3.1,4.2),320,3.0,(1,.89,.79))
-area('Fill • cool softbox',(2.1,-2.0,2.2),135,2.7,(.78,.87,1))
-area('Hair rim • long warm highlight',(.8,1.6,3.2),265,2.0,(1,.91,.78))
-area('Face catchlight',(-.25,-2.1,1.8),18,.6,(1,.95,.88),target=(0,0,1.5))
+area('Key • large warm softbox',(-1.8,-3.0,3.8),330,1.6,(1,.92,.84))
+area('Fill • cool softbox',(2.1,-2.0,2.5),85,2.4,(.81,.88,1))
+area('Hair rim • long warm highlight',(.8,1.6,3.2),235,1.2,(1,.94,.87))
+area('Face catchlight',(-.25,-2.1,1.9),8,.35,(1,.95,.90),target=(0,0,1.5))
 camdata=bpy.data.cameras.new('Portrait camera');cam=bpy.data.objects.new('Portrait camera',camdata);STUDIO.objects.link(cam);scene.camera=cam;camdata.type='ORTHO';camdata.lens=70
 views={'front':((0,-5.3,2.02),(0,0,.844),1.78,(2,3)),'face':((.05,-4.2,1.65),(.05,-.015,1.525),.43,(1,1)),'threequarter':((3.4,-5.3,2.3),(0,0,.865),1.83,(2,3)),'back':((0,5.3,2.1),(0,0,.865),1.83,(2,3)),'side':((5.3,-.05,2.0),(0,0,.865),1.83,(2,3))}
+views['face_side']=((.85,-1.15,1.67),(.04,-.005,1.535),.43,(1,1))
 def setview(name):
     pos,target,scale,aspect=views[name];cam.location=pos;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler();camdata.ortho_scale=scale;scene.render.resolution_y=args.size;scene.render.resolution_x=round(args.size*aspect[0]/aspect[1])
 setview('front')
