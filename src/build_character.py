@@ -202,7 +202,7 @@ HZ=[-.085,-.065,-.038,-.010,.021,.032,.036,.056,.091,.029,-.010,-.036,-.060,-.08
 def hairpoint(th,t,extra=0):
     th=(th+pi)%(2*pi)-pi;bot=smooth_profile(th,HT,HZ);end=math.acos(max(-.99,min(.99,(bot-.020)/.140)));pol=t*end;zs=.020+.140*cos(pol);w,d=shape(zs);back=(1-cos(th))/2;pad=(.007+.010*back)*max(.03,sin(pol))+extra
     cy=.010-.020*exp(-((zs+.108)/.022)**2);zz=zs+.006+(.00035*sin(th*51+1.2)+.00030*sin(th*97+.7))*t**18
-    flow=th-.95*(1-t)**.60*max(0,cos(th));pad+=.00075*(cos(flow*45+t*.4)+.35*cos(flow*87-t*.6))*sin(pi*t)**.7
+    flow=th-.95*max(0,1-t)**.60*max(0,cos(th));pad+=.00075*(cos(flow*45+t*.4)+.35*cos(flow*87-t*.6))*max(0,sin(pi*t))**.7
     return Vector(((w+pad)*sin(th),cy-(d+pad)*cos(th),zz))
 V=[];F=[];nr=58;ns=180
 for t in np.linspace(.012,1,nr):
