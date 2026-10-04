@@ -1,44 +1,52 @@
 {
-  "revision": 9,
-  "score": 76,
-  "iterations": 9,
-  "state": "Reviewed - improving",
-  "notes": "Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
+  "revision": 13,
+  "score": 78,
+  "iterations": 14,
+  "state": "Refining candidate",
+  "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
   "renders": [
     {
-      "file": "face_r09.png",
+      "file": "face_r13.png",
       "label": "Face and hair close-up"
     },
     {
-      "file": "threequarter_r09.png",
+      "file": "threequarter_r13.png",
       "label": "Three-quarter inspection"
     },
     {
-      "file": "back_r09.png",
-      "label": "Backpack and hidden hands"
+      "file": "back_r13.png",
+      "label": "Backpack and hands"
     },
     {
-      "file": "side_r09.png",
+      "file": "side_r13.png",
       "label": "Side silhouette"
     }
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-03T21:25:44+00:00",
-  "hero": "front_r09.png",
+  "updated": "2026-10-04T10:10:34+00:00",
+  "hero": "front_r13.png",
   "downloads": [
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
-      "label": "Lightweight web model - GLB"
+      "label": "Lightweight web GLB \u00b7 Meshopt"
     },
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.glb",
-      "label": "Portable 3D model - GLB"
+      "label": "Portable full-detail GLB"
     },
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
       "label": "Editable Blender scene"
+    },
+    {
+      "file": "model_qa.json",
+      "label": "Model validation report"
+    },
+    {
+      "file": "browser_qa.json",
+      "label": "Browser test report"
     }
   ],
   "history": [
@@ -50,29 +58,34 @@
     "Iteration 6 / revision 6: 72/100 - Five views reviewed. Mouth edge repaired and web export merged to 35 meshes. Eye reflections became too strong, so resemblance score is unchanged. Next: eye glare, smile curvature and fringe shape.",
     "Iteration 7 / revision 7: 73/100 - Five views reviewed. Eye glare reduced and crown rounded. The smile still has too much dark opening; eye spacing, teeth, lips and smiling cheek contours need refinement.",
     "Iteration 8 / revision 8: 74/100 - Five views reviewed. Rounded teeth, lips and softer brows improve the face. Remaining: eyes look too open, hair intersects the shoulder, cloth neckline is artificial, and the leg pose is not yet close enough.",
-    "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt."
+    "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
+    "Iteration 10 / revision 10: 73/100 \u2014 Rejected in prior session: stepped eyelid boundaries, detached fringe and intersecting straps.",
+    "Iteration 11 / revision 11: 75/100 \u2014 All five views reviewed in this continuation: cleaner facial joins but excessive chin projection and a raised shoe. Rejected.",
+    "Iteration 12 / revision 12: 75/100 \u2014 All five views reviewed in this continuation: improved profile and foot contact, but iris fans intersect eye whites and projected straps stretch across the ribs. Rejected.",
+    "Iteration 13 / revision 13: 78/100 \u2014 All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
+    "Iteration 14 / revision 14: 78/100 \u2014 Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
-    "revision": 9,
+    "revision": 13,
     "leg_segments_metres": {
       "L": {
-        "femur": 0.4449999736324782,
-        "tibia": 0.41500008568346336,
+        "femur": 0.4449999895905342,
+        "tibia": 0.41500002957970156,
         "hip": [
-          -0.06499999761581421,
-          0.03200000151991844,
-          0.9449999928474426
+          -0.05000000074505806,
+          -0.012000000104308128,
+          0.9200000166893005
         ],
         "knee": [
-          0.019618958234786987,
-          -0.05896507948637009,
-          0.5176945328712463
+          -0.00015523284673690796,
+          -0.06922600418329239,
+          0.4815189242362976
         ],
         "ankle": [
           -0.10000000149011612,
-          0.054999999701976776,
-          0.13699999451637268
+          0.05999999865889549,
+          0.10000000149011612
         ]
       },
       "R": {
@@ -97,18 +110,37 @@
     },
     "original_assets_only": true,
     "photo_used_as_texture": false,
-    "mesh_objects": 132,
-    "curve_objects": 63,
+    "mesh_objects": 123,
+    "curve_objects": 60,
     "notes": "Both hidden sides and hands are authored; no pre-existing character meshes, texture scans or downloaded HDRIs.",
     "web_export": {
-      "meshes": 42,
-      "vertices": 678276,
-      "triangles": 1326916
+      "meshes": 37,
+      "vertices": 653454,
+      "triangles": 1280710
     },
     "lite_export": {
-      "meshes": 36,
-      "triangles": 496140,
+      "meshes": 31,
+      "triangles": 449902,
       "difference": "Fine fibre meshes omitted; original volume, directional surface maps, face, clothing and pose retained."
     }
+  },
+  "candidate": {
+    "revision": 14,
+    "score": 78,
+    "accepted": false,
+    "notes": "Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint.",
+    "files": [
+      "front_r14.png",
+      "face_r14.png",
+      "threequarter_r14.png",
+      "back_r14.png",
+      "side_r14.png"
+    ]
+  },
+  "qa": {
+    "revision": 13,
+    "formatAndGeometry": true,
+    "desktopAndMobileViewport": true,
+    "physicalPhoneBenchmark": false
   }
 }

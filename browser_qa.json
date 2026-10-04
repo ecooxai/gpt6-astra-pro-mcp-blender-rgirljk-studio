@@ -1,0 +1,77 @@
+{
+  "testedAt": "2026-10-04T10:10:34.970Z",
+  "device": "Headless Chromium / software WebGL; not a physical-phone benchmark",
+  "cases": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1050,
+      "errors": [],
+      "failed": [],
+      "controlsTested": [
+        "face",
+        "back",
+        "wireframe-on",
+        "wireframe-off",
+        "reset"
+      ],
+      "viewer": {
+        "ready": true,
+        "meshes": 31,
+        "triangles": 449902,
+        "modelFile": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
+        "quality": "lightweight",
+        "bounds": [
+          0.48272204544868724,
+          1.729594983225104,
+          0.41250181854073315
+        ],
+        "errors": []
+      },
+      "overflow": false,
+      "canvas": {
+        "width": 781,
+        "height": 690
+      },
+      "title": "Rgirljk · Blender character studio",
+      "readyMs": 7123,
+      "passed": true
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "failed": [],
+      "controlsTested": [
+        "face",
+        "back",
+        "wireframe-on",
+        "wireframe-off",
+        "reset"
+      ],
+      "viewer": {
+        "ready": true,
+        "meshes": 31,
+        "triangles": 449902,
+        "modelFile": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
+        "quality": "lightweight",
+        "bounds": [
+          0.48272204544868724,
+          1.729594983225104,
+          0.41250181854073315
+        ],
+        "errors": []
+      },
+      "overflow": false,
+      "canvas": {
+        "width": 360,
+        "height": 520
+      },
+      "title": "Rgirljk · Blender character studio",
+      "readyMs": 3753,
+      "passed": true
+    }
+  ],
+  "passed": true
+}
