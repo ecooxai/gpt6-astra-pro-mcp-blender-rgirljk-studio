@@ -1,7 +1,7 @@
 {
   "revision": 9,
   "score": 76,
-  "iterations": 9,
+  "iterations": 11,
   "state": "Reviewed - improving",
   "notes": "Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
@@ -50,7 +50,9 @@
     "Iteration 6 / revision 6: 72/100 - Five views reviewed. Mouth edge repaired and web export merged to 35 meshes. Eye reflections became too strong, so resemblance score is unchanged. Next: eye glare, smile curvature and fringe shape.",
     "Iteration 7 / revision 7: 73/100 - Five views reviewed. Eye glare reduced and crown rounded. The smile still has too much dark opening; eye spacing, teeth, lips and smiling cheek contours need refinement.",
     "Iteration 8 / revision 8: 74/100 - Five views reviewed. Rounded teeth, lips and softer brows improve the face. Remaining: eyes look too open, hair intersects the shoulder, cloth neckline is artificial, and the leg pose is not yet close enough.",
-    "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt."
+    "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
+    "Iteration 10 / revision 10: 73/100, rejected in the prior session. Recovered from the conversation review; local candidate files were lost when Colab restored an older checkpoint.",
+    "Iteration 11 / revision 11: 75/100, rejected. Cleaner eyelid/lip topology but excessive chin projection; next build fits straps and corrects ground contact."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
@@ -110,5 +112,18 @@
       "triangles": 496140,
       "difference": "Fine fibre meshes omitted; original volume, directional surface maps, face, clothing and pose retained."
     }
+  },
+  "candidate": {
+    "revision": 11,
+    "score": 75,
+    "accepted": false,
+    "notes": "Five views reviewed. Continuous eye/lip joins improved, but chin projection and raised shoe remain unacceptable. Published model stays revision 9.",
+    "files": [
+      "front_r11.png",
+      "face_r11.png",
+      "threequarter_r11.png",
+      "back_r11.png",
+      "side_r11.png"
+    ]
   }
 }
