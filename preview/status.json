@@ -1,7 +1,7 @@
 {
   "revision": 13,
   "score": 78,
-  "iterations": 15,
+  "iterations": 16,
   "state": "Refining candidate",
   "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
@@ -25,7 +25,7 @@
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-04T10:24:31+00:00",
+  "updated": "2026-10-04T10:31:39+00:00",
   "hero": "front_r13.png",
   "downloads": [
     {
@@ -64,7 +64,8 @@
     "Iteration 12 / revision 12: 75/100 \u2014 All five views reviewed in this continuation: improved profile and foot contact, but iris fans intersect eye whites and projected straps stretch across the ribs. Rejected.",
     "Iteration 13 / revision 13: 78/100 \u2014 All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
     "Iteration 14 / revision 14: 78/100 \u2014 Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint.",
-    "Iteration 15 / revision 15: 78/100 \u2014 Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13."
+    "Iteration 15 / revision 15: 78/100 \u2014 Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13.",
+    "Iteration 16 / revision 16: 78/100 \u2014 Six views reviewed. Curved lapels are better than the flat panels, but the side view reveals that the chest was excluded from the garment-height warp and the tie neck band intersects the collar. These are corrected before promotion."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
@@ -126,16 +127,16 @@
     }
   },
   "candidate": {
-    "revision": 15,
+    "revision": 16,
     "score": 78,
     "accepted": false,
-    "notes": "Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13.",
+    "notes": "Six views reviewed. Curved lapels are better than the flat panels, but the side view reveals that the chest was excluded from the garment-height warp and the tie neck band intersects the collar. These are corrected before promotion.",
     "files": [
-      "front_r15.png",
-      "face_r15.png",
-      "threequarter_r15.png",
-      "back_r15.png",
-      "side_r15.png"
+      "front_r16.png",
+      "face_r16.png",
+      "threequarter_r16.png",
+      "back_r16.png",
+      "side_r16.png"
     ]
   },
   "qa": {

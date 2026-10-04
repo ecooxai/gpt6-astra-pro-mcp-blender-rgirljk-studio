@@ -31,14 +31,14 @@ for s in [-1,1]:
     nt.links.new(cn.outputs["Color"],nt.nodes.get("Principled BSDF").inputs["Base Color"])
     ob=mesh("Curved almond eye white "+str(s),vs,fs,eyemat,parent=head);cc=[]
     for x,y,z in vs:
-        u=(x-cx)/EW;mid=EZ+.0015*s*u;hh=max(.00015,(.0070 if z>=mid else .0042)*max(0,1-u*u)**.59)
+        u=(x-cx)/EW;mid=EZ+.0015*s*u;hh=max(.00015,(.0088 if z>=mid else .0038)*max(0,1-u*u)**.59)
         v=(z-mid)/hh;shade=(1-.28*abs(u)**3)*(1-.27*max(0,v)**2)
         col=np.array([.36,.348,.326])*shade;cc.append((*col,1))
     ca=ob.data.color_attributes.new(name="Col",type="FLOAT_COLOR",domain="POINT");ca.data.foreach_set("color",np.array(cc,dtype=np.float32).ravel())
     icz=EZ+.0018
     def clipped_iris_z(x,z):
         u=(x-cx)/EW;h=max(0,1-u*u)**.59;mid=EZ+.0015*s*u
-        return max(mid-.0042*h+.0001,min(mid+.0070*h-.0001,z))
+        return max(mid-.0038*h+.0001,min(mid+.0088*h-.0001,z))
     for rad,mat,off in [(.0097,pupilmat,.00045),(.0092,irismat,.00065),(.0040,pupilmat,.00085)]:
         vs=[(cx,eye_y(s,cx,icz)-off,icz)];fs=[];nrad=16;na=96
         for i in range(1,nrad+1):

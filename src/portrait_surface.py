@@ -1,7 +1,7 @@
 """Authored facial surface with exact eye and mouth boundary loops."""
 from mathutils.geometry import delaunay_2d_cdt
 EC=.0345; EW=.0195; EZ=.019; MW=.0335; BN=96
-BASE=np.array([.54,.335,.255])
+BASE=np.array([.52,.310,.232])
 # Rounded chin cap and fuller smiling jaw, smoothly joined to the authored profile.
 WP[1:7]=[.029,.046,.064,.079,.087,.088]
 _base_shape=shape
@@ -15,7 +15,7 @@ def shape(z):
     return max(.0005,w),max(.0005,d)
 def skin_color(x,z):
     b=.18*(gauss(x,z,.048,-.029,.025,.023)+gauss(x,z,-.048,-.029,.025,.023))
-    c=np.array([BASE[0]+b*.16,BASE[1]-b*.13,BASE[2]-b*.035])
+    c=np.array([BASE[0]+b*.28,BASE[1]-b*.16,BASE[2]-b*.025])
     for es in [-1,1]:
         t=(x-es*EC)/.024
         if abs(t)<1:
@@ -42,7 +42,7 @@ def face_y(x,z):
 def eye_xz(s,a,outer=False):
     u=cos(a);v=sin(a);h=abs(v)**1.18
     w=.0232 if outer else EW
-    return s*EC+w*u,EZ+.0015*s*u+((.0130 if v>=0 else -.0105) if outer else (.0070 if v>=0 else -.0042))*h
+    return s*EC+w*u,EZ+.0015*s*u+((.0130 if v>=0 else -.0105) if outer else (.0088 if v>=0 else -.0038))*h
 
 def eye_y(s,x,z):
     return face_y(s*EC,EZ)+.007-.012*sqrt(max(.02,1-((x-s*EC)/.025)**2-((z-EZ)/.019)**2))
@@ -77,7 +77,8 @@ def in_hole(x,z):
 
 head.scale=(1.045,1.0,.93);head.location.z=1.540
 skin.node_tree.nodes.get("Principled BSDF").inputs["Base Color"].default_value=(*BASE,1)
-skin.node_tree.nodes.get("Principled BSDF").inputs["Subsurface Weight"].default_value=.12
+skin.node_tree.nodes.get("Principled BSDF").inputs["Subsurface Weight"].default_value=.16
+skin.node_tree.nodes.get("Principled BSDF").inputs["Specular IOR Level"].default_value=.26
 P2=[];E2=[]
 def uvfront(x,z):return Vector((.085*math.asin(max(-1,min(1,x/shape(z)[0]))),z))
 def edge_loop(loop):

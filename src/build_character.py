@@ -45,7 +45,7 @@ irismat=material('Iris • deep brown',(.009,.006,.004),.26)
 irislight=material('Iris • amber fibres',(.041,.021,.009),.32)
 pupilmat=material('Pupil and limbal ring',(.0015,.0012,.0010),.21)
 highlight=material('Eye highlights',(.95,.97,1),.10)
-hairmats=[material('Hair • espresso '+str(i),(.009+i*.0022,.006+i*.0015,.005+i*.0013),.47+i*.016) for i in range(6)]
+hairmats=[material('Hair • espresso '+str(i),(.0045+i*.0013,.0038+i*.0010,.0039+i*.0011),.37+i*.017) for i in range(6)]
 browmat=material('Eyebrows and lashes',(.027,.016,.011),.74)
 for eye_mat in [pupilmat,irismat,irislight]:
     ep=eye_mat.node_tree.nodes.get('Principled BSDF');ep.inputs['Specular IOR Level'].default_value=.055;ep.inputs['Roughness'].default_value=.42
@@ -186,12 +186,12 @@ hairbase=material('Hair - natural dark underlying mass',(.007,.0046,.0038),.59)
 hairbase.node_tree.nodes.get('Principled BSDF').inputs['Specular IOR Level'].default_value=.22
 # Original directional surface detail: generated mathematical strands, no scan or photograph.
 HH=512;WW=1024;yy,xx=np.mgrid[0:HH,0:WW];uu=xx/WW;vv=yy/HH
-phase=2*pi*(uu*120+.15*np.sin(vv*pi*5)+.06*np.sin(vv*pi*17));ridge=np.sin(phase)+.35*np.sin(phase*2.7+1)+.15*np.sin(phase*6.3)
+phase=2*pi*(uu*420+.55*np.sin(vv*pi*2.3)+.19*np.sin(vv*pi*7.7));ridge=np.sin(phase)+.35*np.sin(phase*2.7+1)+.15*np.sin(phase*6.3)
 normal=np.dstack((.07*np.cos(phase)+.025*np.cos(phase*2.7+1),.012*np.sin(vv*pi*5),np.ones_like(uu)));normal/=np.linalg.norm(normal,axis=2,keepdims=True)
 pixels=np.ones((HH,WW,4),np.float32);pixels[:,:,:3]=normal*.5+.5
 im=bpy.data.images.new('Original directional hair normal',width=WW,height=HH,alpha=True);im.colorspace_settings.name='Non-Color';im.pixels.foreach_set(pixels.ravel());im.filepath_raw=str(BUILD/'Original directional hair normal.png');im.file_format='PNG';im.save();im.pack()
-nt=hairbase.node_tree;tx=nt.nodes.new('ShaderNodeTexImage');tx.image=im;nm=nt.nodes.new('ShaderNodeNormalMap');nm.inputs['Strength'].default_value=.30;nt.links.new(tx.outputs['Color'],nm.inputs['Color']);nt.links.new(nm.outputs['Normal'],nt.nodes.get('Principled BSDF').inputs['Normal'])
-pixels[:,:,:3]=np.array([.078,.064,.057])[None,None,:]*(1+.16*ridge[:,:,None])
+nt=hairbase.node_tree;tx=nt.nodes.new('ShaderNodeTexImage');tx.image=im;nm=nt.nodes.new('ShaderNodeNormalMap');nm.inputs['Strength'].default_value=.35;nt.links.new(tx.outputs['Color'],nm.inputs['Color']);nt.links.new(nm.outputs['Normal'],nt.nodes.get('Principled BSDF').inputs['Normal'])
+pixels[:,:,:3]=np.array([.062,.059,.060])[None,None,:]*(1+.22*ridge[:,:,None])
 im=bpy.data.images.new('Original tonal hair strands',width=WW,height=HH,alpha=True);im.pixels.foreach_set(pixels.ravel());im.filepath_raw=str(BUILD/'Original tonal hair strands.png');im.file_format='PNG';im.save();im.pack();tx=nt.nodes.new('ShaderNodeTexImage');tx.image=im;nt.links.new(tx.outputs['Color'],nt.nodes.get('Principled BSDF').inputs['Base Color'])
 nt.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.49;nt.nodes.get('Principled BSDF').inputs['Specular IOR Level'].default_value=.36;nt.nodes.get('Principled BSDF').inputs['Anisotropic'].default_value=.45
 del yy,xx,uu,vv,phase,ridge,normal,pixels
@@ -201,7 +201,8 @@ HT=[-pi,-2,-1.6,-1.2,-.7,-.3,0,.35,.60,.90,1.2,1.6,2,pi]
 HZ=[-.085,-.065,-.038,-.010,.021,.032,.036,.056,.091,.029,-.010,-.036,-.060,-.085]
 def hairpoint(th,t,extra=0):
     th=(th+pi)%(2*pi)-pi;bot=smooth_profile(th,HT,HZ);end=math.acos(max(-.99,min(.99,(bot-.020)/.140)));pol=t*end;zs=.020+.140*cos(pol);w,d=shape(zs);back=(1-cos(th))/2;pad=(.007+.010*back)*max(.03,sin(pol))+extra
-    cy=.010-.020*exp(-((zs+.108)/.022)**2);zz=zs+.006+.00055*sin(th*51+1.2)*t**18
+    cy=.010-.020*exp(-((zs+.108)/.022)**2);zz=zs+.006+(.00035*sin(th*51+1.2)+.00030*sin(th*97+.7))*t**18
+    flow=th-.95*(1-t)**.60*max(0,cos(th));pad+=.00075*(cos(flow*45+t*.4)+.35*cos(flow*87-t*.6))*sin(pi*t)**.7
     return Vector(((w+pad)*sin(th),cy-(d+pad)*cos(th),zz))
 V=[];F=[];nr=58;ns=180
 for t in np.linspace(.012,1,nr):
@@ -215,7 +216,7 @@ huv=[]
 for vi in range(len(V)):
     if vi>=nr*ns:huv.append((.5,0));continue
     tt=.012+.988*(vi//ns)/(nr-1);th=(2*pi*(vi%ns)/ns+pi)%(2*pi)-pi;target=th
-    for _ in range(8):target=th-.95*(1-tt)**.60*max(0,cos(target))
+    for _ in range(28):target=th-.95*(1-tt)**.60*max(0,cos(target))
     huv.append(((target/(2*pi)+.5)%1,tt))
 uvlay=hair_ob.data.uv_layers.new(name='HairUV')
 for poly in hair_ob.data.polygons:
@@ -270,6 +271,8 @@ for side in [-1,1]:
     for k in range(13):
         off=(k-6)*.00018;pts=bez([(side*(.079+off),-.030,.005),(side*(.092+off),-.057,-.040),(side*(.057+off),-.069,-.100),(side*(.067+off),-.061,-.161-k*.001)],34)
         line('Soft face-framing strands',pts,hairmats[k%6],.00018,head,[.2+.8*(1-i/34)**.5 for i in range(34)])
+
+exec((SOURCE_DIR/"groom_refinement.py").read_text(), globals())
 
 # Tailored blouse with an explicit continuous V opening, not deleted grid faces.
 TP=[(1.054,.118,.078),(1.073,.128,.083),(1.115,.123,.079),(1.170,.132,.085),(1.229,.145,.091),(1.285,.154,.085),(1.325,.158,.068),(1.348,.126,.055),(1.375,.051,.044)]
@@ -328,7 +331,7 @@ def strip(name,centers,widths,mat,thick=.002,uvscale=1):
     for i in range(49):
         for j in range(8):k=i*9+j;F.append((k,k+9,k+10,k+1))
     o=mesh(name,V,F,mat,uv=UV);mod=o.modifiers.new('Cloth thickness','SOLIDIFY');mod.thickness=thick;return o
-for s in [-1,1]:strip('Tie • loose neck band '+str(s),[(s*.044,-.059,1.357),(s*.036,-.086,1.317),(s*.017,-.102,1.282)],[.007,.009,.013],tiemat,uvscale=.35)
+for s in [-1,1]:strip('Tie • loose neck band '+str(s),[(s*.045,-.033,1.357),(s*.033,-.077,1.317),(s*.017,-.102,1.282)],[.007,.009,.013],tiemat,uvscale=.35)
 strip('Tie • dimensional loose knot',[(-.006,-.108,1.287),(-.002,-.116,1.264),(.002,-.111,1.245)],[.025,.019,.010],tiemat,thick=.004,uvscale=.20)
 strip('Tie • long striped blade',[(.002,-.111,1.255),(-.009,-.106,1.187),(-.014,-.102,1.10),(-.015,-.115,1.011),(-.011,-.130,.950)],[.012,.022,.025,.027,.029,.030,.031,.031,.0007],tiemat,uvscale=1.20)
 # Pleated tartan skirt, with sharp folded radial profiles and rounded cloth edges.
@@ -373,7 +376,7 @@ def fitted_body_z(z):
     return float(np.interp(z,[.50,.741,1.061,1.250,1.340,1.375,1.400,1.600],[.50,.720,1.035,1.262,1.376,1.397,1.409,1.600]))
 bpy.context.view_layer.update()
 for ob in list(CHAR.objects):
-    if ob.parent is not None or ob.type not in {'MESH','CURVE'} or ob.name.startswith('Neck'):continue
+    if ob.parent is not None or ob.type not in {'MESH','CURVE'}:continue
     mat=ob.matrix_world.copy();inv=mat.inverted()
     if ob.type=='MESH':
         for v in ob.data.vertices:

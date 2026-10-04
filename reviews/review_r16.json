@@ -1,0 +1,17 @@
+{
+  "revision": 16,
+  "iteration": 16,
+  "score": 78,
+  "accepted": false,
+  "notes": "Six views reviewed. Curved lapels are better than the flat panels, but the side view reveals that the chest was excluded from the garment-height warp and the tie neck band intersects the collar. These are corrected before promotion.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:31:39+00:00",
+  "sourceCommit": "ab3dfebca7035ebe590196f293686c19be9b91f1",
+  "evidence": [
+    "reviews/renders/r16/front.jpg",
+    "reviews/renders/r16/face.jpg",
+    "reviews/renders/r16/threequarter.jpg",
+    "reviews/renders/r16/back.jpg",
+    "reviews/renders/r16/side.jpg"
+  ]
+}

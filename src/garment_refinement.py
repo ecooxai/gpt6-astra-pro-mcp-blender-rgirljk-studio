@@ -4,7 +4,7 @@ V=[];F=[];nt=96
 for j,theta in enumerate(np.linspace(.85,2*pi-.85,nt)):
     t=float(theta)
     for k,v in enumerate(np.linspace(0,1,7)):
-        V.append((.005+.043*sin(t),.010-.043*cos(t),1.368+.020*float(v)+.001*cos(t)))
+        V.append((.005+.043*sin(t),.010-.043*cos(t),1.368+.020*float(v)+.001*cos(t)-.005*max(0,cos(t))**2))
 for j in range(nt-1):
     for k in range(6):i=j*7+k;F.append((i,i+7,i+8,i+1))
 stand=mesh("Collar - continuous curved neck stand",V,F,white)
