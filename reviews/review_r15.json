@@ -1,0 +1,17 @@
+{
+  "revision": 15,
+  "iteration": 15,
+  "score": 78,
+  "accepted": false,
+  "notes": "Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:24:31+00:00",
+  "sourceCommit": "a8d779d3b8afca76ec4e78c5731fdaed79bef914",
+  "evidence": [
+    "reviews/renders/r15/front.jpg",
+    "reviews/renders/r15/face.jpg",
+    "reviews/renders/r15/threequarter.jpg",
+    "reviews/renders/r15/back.jpg",
+    "reviews/renders/r15/side.jpg"
+  ]
+}

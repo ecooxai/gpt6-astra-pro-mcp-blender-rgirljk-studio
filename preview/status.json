@@ -1,7 +1,7 @@
 {
   "revision": 13,
   "score": 78,
-  "iterations": 14,
+  "iterations": 15,
   "state": "Refining candidate",
   "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
@@ -25,7 +25,7 @@
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-04T10:10:34+00:00",
+  "updated": "2026-10-04T10:24:31+00:00",
   "hero": "front_r13.png",
   "downloads": [
     {
@@ -39,6 +39,14 @@
     {
       "file": "gpt6_astra_pro_mcp_blender_rgirljk.blend",
       "label": "Editable Blender scene"
+    },
+    {
+      "file": "model_qa.json",
+      "label": "Model validation report"
+    },
+    {
+      "file": "browser_qa.json",
+      "label": "Browser test report"
     }
   ],
   "history": [
@@ -55,7 +63,8 @@
     "Iteration 11 / revision 11: 75/100 \u2014 All five views reviewed in this continuation: cleaner facial joins but excessive chin projection and a raised shoe. Rejected.",
     "Iteration 12 / revision 12: 75/100 \u2014 All five views reviewed in this continuation: improved profile and foot contact, but iris fans intersect eye whites and projected straps stretch across the ribs. Rejected.",
     "Iteration 13 / revision 13: 78/100 \u2014 All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
-    "Iteration 14 / revision 14: 78/100 \u2014 Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint."
+    "Iteration 14 / revision 14: 78/100 \u2014 Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint.",
+    "Iteration 15 / revision 15: 78/100 \u2014 Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
@@ -117,16 +126,22 @@
     }
   },
   "candidate": {
-    "revision": 14,
+    "revision": 15,
     "score": 78,
     "accepted": false,
-    "notes": "Five body views and the facial close-up reviewed. Smoother eyelid transitions and stronger brows are useful, but the new lower-chin transition and dark nostrils are not yet natural enough. Revision 13 remains the published checkpoint.",
+    "notes": "Six views reviewed, including a new close facial side view. Eye contrast and nostril size are improved, but the side view exposes an overly hollow collar/neck junction and the lower-chin transition still needs smoothing. The published model stays revision 13.",
     "files": [
-      "front_r14.png",
-      "face_r14.png",
-      "threequarter_r14.png",
-      "back_r14.png",
-      "side_r14.png"
+      "front_r15.png",
+      "face_r15.png",
+      "threequarter_r15.png",
+      "back_r15.png",
+      "side_r15.png"
     ]
+  },
+  "qa": {
+    "revision": 13,
+    "formatAndGeometry": true,
+    "desktopAndMobileViewport": true,
+    "physicalPhoneBenchmark": false
   }
 }

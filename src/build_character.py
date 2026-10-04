@@ -291,13 +291,8 @@ for i in range(rows-1):
 shirt=mesh('Blouse - continuous tailored cotton',V,F,white,uv=UV);md=shirt.modifiers.new('Cotton thickness','SOLIDIFY');md.thickness=.0012
 for side,edge in enumerate(edges):line('Fine neckline topstitch '+str(side),[p for p in edge if p[2]>1.302],seamwhite,.00024)
 
-# Open spread collar, placket and small buttons.
-for s in [-1,1]:
-    pts=[(s*.037,-.044,1.391),(s*.064,-.040,1.367),(s*.080,-.070,1.314),(s*.050,-.100,1.331),(s*.023,-.080,1.346)]
-    c=mesh('Collar • '+str(s),pts,[(0,1,4),(1,2,3,4)],white,False);mod=c.modifiers.new('Collar cotton thickness','SOLIDIFY');mod.thickness=.0023;mod=c.modifiers.new('Collar softened edge','BEVEL');mod.width=.0013;mod.segments=3
-    line('Collar topstitch',[(x,y-.0012,z) for x,y,z in pts+[pts[0]]],seamwhite,.00033)
-    # Shoulder seam across the sleeve cap.
-    pp=[(s*(.127+.033*t),-.043+.092*t,1.343-.017*sin(pi*t)) for t in np.linspace(0,1,32)];line('Shoulder seams',pp,seamwhite,.00045)
+# Curved collar panels and stand, authored in a separate source module.
+exec((SOURCE_DIR/"garment_refinement.py").read_text(), globals())
 # Button placket raised from the cotton, visible beside the loose tie.
 pp=[(.003,-.080,1.296),(.003,-.093,1.225),(.005,-.088,1.15),(.004,-.083,1.06)]
 line('Shirt placket edge',[(x-.007,y-.001,z) for x,y,z in catmull(pp,50)],seamwhite,.0004)

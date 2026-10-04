@@ -1,0 +1,125 @@
+{
+  "revision": 13,
+  "files": [
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk_r13.glb",
+      "bytes": 39551336,
+      "meshes": 37,
+      "triangles": 1280710,
+      "size": [
+        0.4714013491117855,
+        1.6920747738617665,
+        0.38460221481393514
+      ],
+      "bounds": {
+        "min": [
+          -0.2262343317270279,
+          0.003964820477587068,
+          -0.23349998891353607
+        ],
+        "max": [
+          0.2451670173847576,
+          1.6960395943393536,
+          0.15110222590039907
+        ]
+      },
+      "errors": 0,
+      "warnings": 2,
+      "passed": true
+    },
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk_web_r13.glb",
+      "bytes": 10521240,
+      "meshes": 37,
+      "triangles": 1280710,
+      "size": [
+        0.47139820824240547,
+        1.692075797212876,
+        0.38460311169150535
+      ],
+      "bounds": {
+        "min": [
+          -0.2262343317270279,
+          0.003965142543169091,
+          -0.23349998891353607
+        ],
+        "max": [
+          0.24516387651537758,
+          1.696040939756045,
+          0.15110312277796928
+        ]
+      },
+      "errors": 0,
+      "warnings": 2,
+      "passed": true
+    },
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk_lite_r13.glb",
+      "bytes": 14177376,
+      "meshes": 31,
+      "triangles": 449902,
+      "size": [
+        0.4714013491117855,
+        1.6919184282959283,
+        0.38460221481393514
+      ],
+      "bounds": {
+        "min": [
+          -0.2262343317270279,
+          0.003964820477587068,
+          -0.23349998891353607
+        ],
+        "max": [
+          0.2451670173847576,
+          1.6958832487735154,
+          0.15110222590039907
+        ]
+      },
+      "errors": 0,
+      "warnings": 2,
+      "passed": true
+    },
+    {
+      "file": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web_r13.glb",
+      "bytes": 5533400,
+      "meshes": 31,
+      "triangles": 449902,
+      "size": [
+        0.47139820824240547,
+        1.6919181519116746,
+        0.38460311169150535
+      ],
+      "bounds": {
+        "min": [
+          -0.2262343317270279,
+          0.003965142543169091,
+          -0.23349998891353607
+        ],
+        "max": [
+          0.24516387651537758,
+          1.6958832944548436,
+          0.15110312277796928
+        ]
+      },
+      "errors": 0,
+      "warnings": 2,
+      "passed": true
+    }
+  ],
+  "checks": {
+    "fourGLBVariantsValidated": true,
+    "decodedWorldBounds": true,
+    "embeddedOriginalTexturesOnly": true,
+    "noStudioLightsOrCameras": true,
+    "noExternalArtImportCallsInModelSource": true,
+    "compressionBoundsDifferenceMetres": [
+      3.140869380025002e-06,
+      3.140869380025002e-06
+    ],
+    "legLengthDifferenceMetres": {
+      "femur": 2.6389652851843692e-08,
+      "tibia": 7.54595715357631e-08
+    }
+  },
+  "passed": true
+}

@@ -82,7 +82,7 @@ P2=[];E2=[]
 def uvfront(x,z):return Vector((.085*math.asin(max(-1,min(1,x/shape(z)[0]))),z))
 def edge_loop(loop):
     start=len(P2);P2.extend(loop);E2.extend((start+i,start+(i+1)%len(loop)) for i in range(len(loop)))
-zl=np.linspace(ZP[0],ZP[-1],181)
+zl=np.unique(np.concatenate([np.linspace(ZP[0],ZP[-1],181),np.linspace(ZP[0],-.110,40)]))
 edge_loop([Vector((-.085*pi/2,float(z))) for z in zl]+[Vector((.085*pi/2,float(z))) for z in zl[::-1]])
 for side in [-1,1]:edge_loop([uvfront(*eye_xz(side,2*pi*j/BN,True)) for j in range(BN)])
 edge_loop([uvfront(*mouth_xz(2*pi*j/BN,True)) for j in range(BN)])

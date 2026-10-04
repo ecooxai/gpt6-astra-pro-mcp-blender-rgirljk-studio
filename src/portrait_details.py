@@ -1,5 +1,15 @@
 """Original anatomical detail fitted to portrait_surface.py."""
-neck=tube("Neck and covered upper chest",[(-.002,.014,1.304),(.005,.011,1.367),(.006,.012,1.476)],[.053,.0355,.034],skin,n=40,sides=64,ratio=.89)
+profiles=[(1.275,.140,.073,.005),(1.312,.133,.067,.002),(1.338,.091,.052,-.003),(1.360,.052,.037,.005),(1.384,.0355,.031,.012),(1.476,.034,.030,.012)]
+vs=[];fs=[];nz=82;na=80
+for z in np.linspace(profiles[0][0],profiles[-1][0],nz):
+    zz=float(z);rx=smooth_profile(zz,[q[0] for q in profiles],[q[1] for q in profiles]);ry=smooth_profile(zz,[q[0] for q in profiles],[q[2] for q in profiles]);cy=smooth_profile(zz,[q[0] for q in profiles],[q[3] for q in profiles])
+    for j in range(na):
+        a=2*pi*j/na;vs.append((.005+rx*sin(a),cy-ry*cos(a),zz))
+for i in range(nz-1):
+    for j in range(na):k=i*na+j;q=i*na+(j+1)%na;fs.append((k,q,q+na,k+na))
+fs.append(tuple(range(na-1,-1,-1)));fs.append(tuple((nz-1)*na+j for j in range(na)))
+neck=mesh("Neck and covered upper chest",vs,fs,skin)
+
 earskin=material("Ears - warm translucent skin",(.56,.29,.23),.49,sss=.23)
 for s in [-1,1]:
     uvball("Ear "+str(s),(s*.086,.010,-.014),(.014,.010,.029),earskin,head)
