@@ -1,8 +1,8 @@
 {
   "revision": 9,
   "score": 76,
-  "iterations": 12,
-  "state": "Rendering revision 13",
+  "iterations": 13,
+  "state": "Reviewed candidate; export pending",
   "notes": "Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
   "model": "gpt6_astra_pro_mcp_blender_rgirljk_lite_web.glb",
   "renders": [
@@ -25,7 +25,7 @@
   ],
   "project": "/home/dev/project/3d/gpt6_astra_pro_mcp_blender_rgirljk_studio",
   "build": "/build/gpt6_astra_pro_mcp_blender_rgirljk_studio",
-  "updated": "2026-10-04T09:52:13+00:00",
+  "updated": "2026-10-04T09:59:01+00:00",
   "hero": "front_r09.png",
   "downloads": [
     {
@@ -53,7 +53,8 @@
     "Iteration 9 / revision 9: 76/100 - Five views reviewed. Raised-foot pose, skirt proportions, continuous neckline and hair clearance improved. Lightweight model retains the same main surfaces. Remaining: face still stylized and front backpack straps float from the shirt.",
     "Iteration 10 / revision 10: 73/100 \u2014 Rejected in prior session: stepped eyelid boundaries, detached fringe and intersecting straps.",
     "Iteration 11 / revision 11: 75/100 \u2014 All five views reviewed in this continuation: cleaner facial joins but excessive chin projection and a raised shoe. Rejected.",
-    "Iteration 12 / revision 12: 75/100 \u2014 All five views reviewed in this continuation: improved profile and foot contact, but iris fans intersect eye whites and projected straps stretch across the ribs. Rejected."
+    "Iteration 12 / revision 12: 75/100 \u2014 All five views reviewed in this continuation: improved profile and foot contact, but iris fans intersect eye whites and projected straps stretch across the ribs. Rejected.",
+    "Iteration 13 / revision 13: 78/100 \u2014 All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work."
   ],
   "detailModel": "gpt6_astra_pro_mcp_blender_rgirljk_web.glb",
   "geometry": {
@@ -113,5 +114,18 @@
       "triangles": 496140,
       "difference": "Fine fibre meshes omitted; original volume, directional surface maps, face, clothing and pose retained."
     }
+  },
+  "candidate": {
+    "revision": 13,
+    "score": 78,
+    "accepted": true,
+    "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
+    "files": [
+      "front_r13.png",
+      "face_r13.png",
+      "threequarter_r13.png",
+      "back_r13.png",
+      "side_r13.png"
+    ]
   }
 }

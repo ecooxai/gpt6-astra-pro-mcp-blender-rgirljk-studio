@@ -1,0 +1,17 @@
+{
+  "revision": 13,
+  "iteration": 13,
+  "score": 78,
+  "accepted": true,
+  "notes": "All five views reviewed. Curved irises are clean, straps remain narrow and attached, the chin profile is improved and both shoes have ground contact. Still stylized: eyelid blend, nose anatomy, smile and hair need further work.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T09:59:01+00:00",
+  "sourceCommit": "1333dbaeeec2ff3f30e2c8dd8834c7c6245cb6e9",
+  "evidence": [
+    "reviews/renders/r13/front.jpg",
+    "reviews/renders/r13/face.jpg",
+    "reviews/renders/r13/threequarter.jpg",
+    "reviews/renders/r13/back.jpg",
+    "reviews/renders/r13/side.jpg"
+  ]
+}

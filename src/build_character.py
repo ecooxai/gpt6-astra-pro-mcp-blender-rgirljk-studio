@@ -8,7 +8,7 @@ from mathutils import Vector
 from math import sin,cos,pi,sqrt,exp
 from pathlib import Path
 random.seed(731)
-ROOT=Path(__file__).resolve().parents[1]; OUT=ROOT/'preview'; BUILD=ROOT/'build'
+SOURCE_DIR=Path(__file__).resolve().parent; ROOT=Path(os.environ.get('RGIRL_PROJECT_ROOT',str(SOURCE_DIR.parent))); OUT=ROOT/'preview'; BUILD=ROOT/'build'
 a=argparse.ArgumentParser();a.add_argument('--revision',type=int,default=1);a.add_argument('--samples',type=int,default=32);a.add_argument('--views',default='front,face');a.add_argument('--size',type=int,default=900);a.add_argument('--no-export',action='store_true');args=a.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 OUT.mkdir(exist_ok=True);BUILD.resolve().mkdir(parents=True,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -160,7 +160,7 @@ def face_y(x,z):
     y+=.010*(gauss(x,z,.037,.018,.022,.013)+gauss(x,z,-.037,.018,.022,.013))
     y-=.008*gauss(x,z,0,-.056,.036,.023)
     return y
-exec((ROOT/"src/portrait_surface.py").read_text(), globals())
+exec((SOURCE_DIR/"portrait_surface.py").read_text(), globals())
 # Original subtle skin normal and roughness maps, generated from deterministic noise.
 uvlay=hm.data.uv_layers.new(name='SkinUV')
 for poly in hm.data.polygons:
@@ -179,7 +179,7 @@ rough=np.clip(.44+.024*height,.35,.54);rgba[:,:,:3]=rough[:,:,None]
 im=bpy.data.images.new('Original skin micro-roughness',width=W,height=H,alpha=True);im.colorspace_settings.name='Non-Color';im.pixels.foreach_set(rgba.ravel());im.filepath_raw=str(BUILD/'Original skin micro-roughness.png');im.file_format='PNG';im.save();im.pack();tex=nt.nodes.new('ShaderNodeTexImage');tex.image=im;nt.links.new(tex.outputs['Color'],nt.nodes.get('Principled BSDF').inputs['Roughness'])
 del height,dx,dy,normal,rgba,rough
 
-exec((ROOT/"src/portrait_details.py").read_text(), globals())
+exec((SOURCE_DIR/"portrait_details.py").read_text(), globals())
 
 # One fitted hair mass with a swept hairline; all fibres are authored geometry.
 hairbase=material('Hair - natural dark underlying mass',(.007,.0046,.0038),.59)
@@ -370,7 +370,7 @@ for s in [-1,1]:
     line('Backpack zipper',[(s*.074,.226,z) for z in np.linspace(1.145,1.228,30)],stitch,.00065)
     box('Zipper pull',(s*.074,.232,1.22),(.006,.003,.013),buckle,.002)
 line('Backpack top handle',bez([(-.037,.159,1.352),(-.035,.164,1.394),(.035,.164,1.394),(.037,.159,1.352)],40),webbing,.005)
-exec((ROOT/"src/fit_backpack.py").read_text(), globals())
+exec((SOURCE_DIR/"fit_backpack.py").read_text(), globals())
 # Subtle embroidered shirt mark, original stitched motif rather than a borrowed logo.
 for k in range(4):line('Shirt embroidered mark',[(.075+k*.0014,-.087,1.254),(.079+k*.0014,-.088,1.262),(.077+k*.0014,-.087,1.266)],material('Embroidery blue '+str(k),(.26,.46,.67),.9),.0005)
 # Fit garment proportions: longer blouse and lower waistband; skirt hem unchanged.
