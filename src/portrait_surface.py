@@ -2,6 +2,17 @@
 from mathutils.geometry import delaunay_2d_cdt
 EC=.0345; EW=.0195; EZ=.019; MW=.0335; BN=96
 BASE=np.array([.54,.335,.255])
+# Rounded chin cap and fuller smiling jaw, smoothly joined to the authored profile.
+WP[1:7]=[.029,.046,.064,.079,.087,.088]
+_base_shape=shape
+def shape(z):
+    w,d=_base_shape(z)
+    if z<-.096:
+        capw=.0515*sqrt(max(0,1-((z+.082)/.040)**2))
+        capd=.0554*sqrt(max(0,1-((z+.075)/.047)**2))
+        t=max(0,min(1,(z+.111)/.015));t=t*t*(3-2*t)
+        w=capw*(1-t)+w*t;d=capd*(1-t)+d*t
+    return max(.0005,w),max(.0005,d)
 def skin_color(x,z):
     b=.11*(gauss(x,z,.048,-.029,.025,.023)+gauss(x,z,-.048,-.029,.025,.023))
     c=np.array([BASE[0]+b*.16,BASE[1]-b*.13,BASE[2]-b*.035])
@@ -9,21 +20,23 @@ def skin_color(x,z):
         t=(x-es*EC)/.024
         if abs(t)<1:
             mid=.039+.005*(1-t*t)+.0012*es*t;w=.0028*max(.02,1-t*t)**.6
-            a=.80*exp(-((z-mid)/w)**2)*max(0,1-t*t)**.35
-            c=c*(1-a)+np.array([.045,.026,.020])*a
+            a=.94*exp(-((z-mid)/w)**2)*max(0,1-t*t)**.35
+            c=c*(1-a)+np.array([.014,.008,.006])*a
     return c
 def center_y(z):
     return smooth_profile(z,[-.122,-.115,-.10,-.08,-.05,-.015,.010],[-.035,-.020,-.016,-.009,0,.010,.010]) if z<.010 else .010
 def face_y(x,z):
     w,d=shape(z);y=center_y(z)-d*sqrt(max(0,1-(x/max(w,.001))**2))
-    y-=.018*gauss(x,z,0,-.023,.013,.013)+.008*gauss(x,z,0,.006,.010,.031)
-    y-=.006*(gauss(x,z,.012,-.031,.006,.006)+gauss(x,z,-.012,-.031,.006,.006))
+    y-=.021*gauss(x,z,0,-.023,.013,.013)+.008*gauss(x,z,0,.006,.010,.031)
+    y-=.007*(gauss(x,z,.013,-.030,.007,.007)+gauss(x,z,-.013,-.030,.007,.007))
+    y+=.0013*(gauss(x,z,.019,-.026,.003,.007)+gauss(x,z,-.019,-.026,.003,.007))
+    y-=.0028*(gauss(x,z,.040,-.035,.019,.018)+gauss(x,z,-.040,-.035,.019,.018))
     y-=.007*(gauss(x,z,.048,-.021,.027,.027)+gauss(x,z,-.048,-.021,.027,.027))
     y+=.0065*(gauss(x,z,EC,.022,.022,.014)+gauss(x,z,-EC,.022,.022,.014))
     y-=.007*gauss(x,z,0,-.058,.033,.022)
     y-=.0035*gauss(x,z,0,-.099,.025,.015)
     for fx,fz in [(.021,-.029),(.027,-.036),(.032,-.044),(.035,-.051)]:
-        y+=.00055*gauss(abs(x),z,fx,fz,.0038,.007)
+        y+=.00105*gauss(abs(x),z,fx,fz,.0038,.007)
     return y
 
 def eye_xz(s,a,outer=False):
@@ -42,7 +55,15 @@ def mouth_xz(a,outer=False):
         x*=1.055;z+=(.0048 if sin(a)>=0 else -.0060)*h
     return x,z
 
+def nostril_xz(side,a,outer=False):
+    rx=.0052 if outer else .0033;rz=.0030 if outer else .00145
+    x=side*.0115+rx*cos(a);z=-.033+rz*sin(a)-side*.18*(x-side*.0115)
+    return x,z
+
 def in_hole(x,z):
+    for side in [-1,1]:
+        u=(x-side*.0115)/.0052;v=(z+.033+side*.18*(x-side*.0115))/.0030
+        if u*u+v*v<1:return True
     for s in [-1,1]:
         u=(x-s*EC)/.0232
         if abs(u)<1:
@@ -54,7 +75,7 @@ def in_hole(x,z):
         if -.069+.015*u*u-.006*h<z<-.050-.004*u*u+.0048*h:return True
     return False
 
-head.scale=(1.03,1.0,.96);head.location.z=1.540
+head.scale=(1.045,1.0,.93);head.location.z=1.540
 skin.node_tree.nodes.get("Principled BSDF").inputs["Base Color"].default_value=(*BASE,1)
 skin.node_tree.nodes.get("Principled BSDF").inputs["Subsurface Weight"].default_value=.12
 P2=[];E2=[]
@@ -65,6 +86,14 @@ zl=np.linspace(ZP[0],ZP[-1],181)
 edge_loop([Vector((-.085*pi/2,float(z))) for z in zl]+[Vector((.085*pi/2,float(z))) for z in zl[::-1]])
 for side in [-1,1]:edge_loop([uvfront(*eye_xz(side,2*pi*j/BN,True)) for j in range(BN)])
 edge_loop([uvfront(*mouth_xz(2*pi*j/BN,True)) for j in range(BN)])
+for side in [-1,1]:edge_loop([uvfront(*nostril_xz(side,2*pi*j/BN,True)) for j in range(BN)])
+# Locally denser eyebrow sampling keeps the pigment shape feathered, not blurry.
+for side in [-1,1]:
+    for t in np.linspace(-.99,.99,65):
+        x=side*EC+.024*t;mid=.039+.005*(1-t*t)+.0012*side*t;th=.0028*max(.02,1-t*t)**.6
+        for v in np.linspace(-1.7,1.7,11):
+            z=mid+float(v)*th
+            if not in_hole(x,z):P2.append(uvfront(x,z))
 for z in zl[1:-1]:
     for th in np.linspace(-pi/2,pi/2,127)[1:-1]:
         x=shape(float(z))[0]*sin(float(th))
@@ -90,23 +119,31 @@ for i in range(len(zl)-1):
     for j in range(ns):
         k=start+i*(ns+1)+j;F.append((k,k+1,k+ns+2,k+ns+1))
 # Eyelids and lips are part of the same mesh, not floating overlays.
-for kind in [-1,1,0]:
+for kind in [-1,1,0,-2,2]:
     start=len(V);nr=12
     for i in range(nr):
         v=i/(nr-1)
         for j in range(BN):
             a=2*pi*j/BN
-            if kind:
+            if abs(kind)==1:
                 xi,zi=eye_xz(kind,a);xo,zo=eye_xz(kind,a,True)
                 x=xi*(1-v)+xo*v;z=zi*(1-v)+zo*v
                 yi=eye_y(kind,xi,zi)-.00015
-                y=yi*(1-v)+face_y(xo,zo)*v-.00055*sin(pi*v)*abs(sin(a))
-                color=skin_color(x,z)
+                yo=face_y(xo,zo);dx=xo-xi;dz=zo-zi;ep=.015
+                m0=(eye_y(kind,xi+ep*dx,zi+ep*dz)-eye_y(kind,xi-ep*dx,zi-ep*dz))/(2*ep)
+                m1=(face_y(xo+ep*dx,zo+ep*dz)-face_y(xo-ep*dx,zo-ep*dz))/(2*ep)
+                y=(2*v**3-3*v*v+1)*yi+(v**3-2*v*v+v)*m0+(-2*v**3+3*v*v)*yo+(v**3-v*v)*m1
+                y-=.00030*sin(pi*v)**2*abs(sin(a));color=skin_color(x,z)
+            elif abs(kind)==2:
+                side=kind//2;xi,zi=nostril_xz(side,a);xo,zo=nostril_xz(side,a,True)
+                x=xi*(1-v)+xo*v;z=zi*(1-v)+zo*v
+                y=face_y(x,z)-.0006*(1-v)**2-.0012*v*(1-v)**2
+                color=skin_color(x,z)*(1-.055*(1-v))
             else:
                 xi,zi=mouth_xz(a);xo,zo=mouth_xz(a,True)
                 x=xi*(1-v)+xo*v;z=zi*(1-v)+zo*v
-                y=face_y(x,z)-.0010*(1-v)-.0025*sin(pi*v)*abs(sin(a))
-                fade=v**3;color=np.array([.43,.105,.125])*(1-fade)+skin_color(x,z)*fade
+                y=face_y(x,z)-abs(sin(a))*(.0010*(1-v)**2+.009*v*(1-v)**2)
+                fade=v*v*(3-2*v);color=np.array([.41,.105,.125])*(1-fade)+skin_color(x,z)*fade
             V.append((x,y,z));cols.append((*color,1))
     for i in range(nr-1):
         for j in range(BN):

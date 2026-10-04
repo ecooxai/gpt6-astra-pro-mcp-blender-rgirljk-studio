@@ -49,9 +49,17 @@ for s in [-1,1]:
         t=-.95+1.9*k/57;x=cx+.024*t;z=.039+.005*(1-t*t)+.0012*s*t+random.uniform(-.001,.001)
         pp=[(x,face_y(x,z)-.00023,z),(x+s*.0007,face_y(x+s*.0007,z+.0012)-.00025,z+.0012)]
         line("Natural brow filaments",pp,hairmats[k%3],.00007,head,[.65,.06])
-    nostrilmat=material("Nostril soft depth "+str(s),(.12,.047,.032),.78)
-    x=s*.0098;z=-.034
-    uvball("Nostril inset "+str(s),(x,face_y(x,z)-.00022,z),(.0027,.00035,.0011),nostrilmat,head,24,12)
+    nostrilmat=material("Nostril inner tissue "+str(s),(.055,.017,.013),.64)
+    vs=[(s*.0115,face_y(s*.0115,-.033)+.0055,-.034)];fs=[];nr=8;na=BN
+    for i in range(1,nr+1):
+        r=i/nr
+        for j in range(na):
+            x,z=nostril_xz(s,2*pi*j/na);x=s*.0115+(x-s*.0115)*r;z=-.034+(z+.034)*r
+            y=face_y(x,z)-.0006+.006*(1-r)**.8;vs.append((x,y,z))
+    fs.extend((0,1+j,1+(j+1)%na) for j in range(na))
+    for i in range(nr-1):
+        for j in range(na):k=1+i*na+j;q=1+i*na+(j+1)%na;fs.append((k,k+na,q+na,q))
+    mesh("Recessed anatomical nostril "+str(s),vs,fs,nostrilmat,parent=head)
     innerx=cx-s*EW*.96;innerz=EZ-.0013
     uvball("Tear duct "+str(s),(innerx,eye_y(s,innerx,innerz)-.0002,innerz),(.00075,.00028,.00055),lips,head,16,10)
 markmat=material("Subtle natural skin pigment",(.19,.088,.059),.85)
@@ -68,7 +76,8 @@ fs.extend((0,1+j,1+(j+1)%BN) for j in range(BN))
 for i in range(nr-1):
     for j in range(BN):k=1+i*BN+j;q=1+i*BN+(j+1)%BN;fs.append((k,k+BN,q+BN,q))
 mesh("Smile - fitted oral cavity",vs,fs,oral,parent=head)
-teeth.node_tree.nodes.get("Principled BSDF").inputs["Roughness"].default_value=.34
+teeth.node_tree.nodes.get("Principled BSDF").inputs["Roughness"].default_value=.31
+teeth.node_tree.nodes.get("Principled BSDF").inputs["Base Color"].default_value=(.70,.68,.60,1)
 widths=[.0047,.0058,.0067,.0076,.0076,.0067,.0058,.0047]
 heights=[.0074,.0090,.0103,.0117,.0117,.0103,.0090,.0074]
 left=-(sum(widths)+.00012*7)/2
