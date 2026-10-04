@@ -1,0 +1,10 @@
+{
+  "revision": 10,
+  "iteration": 10,
+  "score": 73,
+  "accepted": false,
+  "notes": "Rejected in prior session: stepped eyelid boundaries, detached fringe and intersecting straps.",
+  "reviewBasis": "Direct visual inspection; subjective score.",
+  "artifactStatus": "Preview files lost when Colab unexpectedly reconnected from its older home backup; source for r12 recovered from GitHub.",
+  "recorded": "2026-10-04T09:52:13+00:00"
+}

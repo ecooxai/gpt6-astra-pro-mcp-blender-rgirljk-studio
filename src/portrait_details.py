@@ -20,19 +20,24 @@ for s in [-1,1]:
     def clipped_iris_z(x,z):
         u=(x-cx)/EW;h=max(0,1-u*u)**.59;mid=EZ+.0015*s*u
         return max(mid-.0042*h+.0001,min(mid+.0070*h-.0001,z))
-    for rad,mat,off in [(.0097,pupilmat,.00013),(.0092,irismat,.00022),(.0040,pupilmat,.00033)]:
-        vs=[(cx,eye_y(s,cx,icz)-off,icz)]
-        for j in range(96):
-            a=2*pi*j/96;x=cx+rad*cos(a);z=clipped_iris_z(x,icz+rad*sin(a))
-            vs.append((x,eye_y(s,x,z)-off,z))
-        mesh("Brown iris and pupil "+str(s),vs,[(0,1+j,1+(j+1)%96) for j in range(96)],mat,parent=head)
+    for rad,mat,off in [(.0097,pupilmat,.00045),(.0092,irismat,.00065),(.0040,pupilmat,.00085)]:
+        vs=[(cx,eye_y(s,cx,icz)-off,icz)];fs=[];nrad=16;na=96
+        for i in range(1,nrad+1):
+            r=i/nrad
+            for j in range(na):
+                a=2*pi*j/na;bx=cx+rad*cos(a);bz=clipped_iris_z(bx,icz+rad*sin(a))
+                x=cx+(bx-cx)*r;z=icz+(bz-icz)*r;vs.append((x,eye_y(s,x,z)-off,z))
+        fs.extend((0,1+j,1+(j+1)%na) for j in range(na))
+        for i in range(nrad-1):
+            for j in range(na):k=1+i*na+j;q=1+i*na+(j+1)%na;fs.append((k,k+na,q+na,q))
+        mesh("Tessellated curved iris "+str(s),vs,fs,mat,parent=head)
     for k in range(48):
         a=2*pi*k/48;pp=[]
         for r in np.linspace(.004,.0075,5):
-            x=cx+r*cos(a);z=clipped_iris_z(x,icz+r*sin(a));pp.append((x,eye_y(s,x,z)-.00029,z))
+            x=cx+r*cos(a);z=clipped_iris_z(x,icz+r*sin(a));pp.append((x,eye_y(s,x,z)-.00076,z))
         line("Fine iris fibres",pp,irislight,.000045,head)
     for dx,dz,rr in [(-.0023,.0032,.0009),(.0016,-.0008,.00028)]:
-        x=cx+dx;z=EZ+dz;uvball("Eye catchlight",(x,eye_y(s,x,z)-.00045,z),(rr,.00015,rr),highlight,head,20,12)
+        x=cx+dx;z=EZ+dz;uvball("Eye catchlight",(x,eye_y(s,x,z)-.0010,z),(rr,.00015,rr),highlight,head,20,12)
     edge=[]
     for a in np.linspace(0,pi,65):
         x,z=eye_xz(s,float(a));edge.append((x,eye_y(s,x,z)-.00035,z))

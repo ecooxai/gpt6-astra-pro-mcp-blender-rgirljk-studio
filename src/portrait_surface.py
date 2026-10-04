@@ -13,7 +13,7 @@ def skin_color(x,z):
             c=c*(1-a)+np.array([.045,.026,.020])*a
     return c
 def center_y(z):
-    return smooth_profile(z,[-.122,-.115,-.10,-.08,-.05,-.015],[-.035,-.020,-.016,-.009,0,.010]) if z<-.015 else .010
+    return smooth_profile(z,[-.122,-.115,-.10,-.08,-.05,-.015,.010],[-.035,-.020,-.016,-.009,0,.010,.010]) if z<.010 else .010
 def face_y(x,z):
     w,d=shape(z);y=center_y(z)-d*sqrt(max(0,1-(x/max(w,.001))**2))
     y-=.018*gauss(x,z,0,-.023,.013,.013)+.008*gauss(x,z,0,.006,.010,.031)
@@ -106,7 +106,7 @@ for kind in [-1,1,0]:
                 xi,zi=mouth_xz(a);xo,zo=mouth_xz(a,True)
                 x=xi*(1-v)+xo*v;z=zi*(1-v)+zo*v
                 y=face_y(x,z)-.0010*(1-v)-.0025*sin(pi*v)*abs(sin(a))
-                fade=v*v*(3-2*v);color=np.array([.37,.082,.099])*(1-fade)+skin_color(x,z)*fade
+                fade=v**3;color=np.array([.43,.105,.125])*(1-fade)+skin_color(x,z)*fade
             V.append((x,y,z));cols.append((*color,1))
     for i in range(nr-1):
         for j in range(BN):
