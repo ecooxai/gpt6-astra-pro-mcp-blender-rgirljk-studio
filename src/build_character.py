@@ -179,6 +179,8 @@ rough=np.clip(.44+.024*height,.35,.54);rgba[:,:,:3]=rough[:,:,None]
 im=bpy.data.images.new('Original skin micro-roughness',width=W,height=H,alpha=True);im.colorspace_settings.name='Non-Color';im.pixels.foreach_set(rgba.ravel());im.filepath_raw=str(BUILD/'Original skin micro-roughness.png');im.file_format='PNG';im.save();im.pack();tex=nt.nodes.new('ShaderNodeTexImage');tex.image=im;nt.links.new(tex.outputs['Color'],nt.nodes.get('Principled BSDF').inputs['Roughness'])
 del height,dx,dy,normal,rgba,rough
 
+exec((SOURCE_DIR/"skin_finish.py").read_text(), globals())
+
 exec((SOURCE_DIR/"portrait_details.py").read_text(), globals())
 
 # One fitted hair mass with a swept hairline; all fibres are authored geometry.
@@ -474,6 +476,14 @@ scene.view_settings.view_transform='AgX';scene.view_settings.look='AgX - Medium 
 world=bpy.data.worlds.new('Studio atmosphere');scene.world=world;world.use_nodes=True;world.node_tree.nodes.get('Background').inputs[0].default_value=(.38,.44,.56,1);world.node_tree.nodes.get('Background').inputs[1].default_value=.12
 floor=material('Studio floor',(.10,.125,.16),.83)
 bpy.ops.mesh.primitive_plane_add(size=200,location=(0,0,-.004));ob=bpy.context.object;ob.name='STUDIO • seamless backdrop';move_col(ob,STUDIO);ob.data.materials.append(floor)
+# Original curved studio sweep removes the perspective horizon line.
+wallverts=[];wallfaces=[]
+profile=[(3+3*sin(t),-.004+3*(1-cos(t))) for t in np.linspace(0,pi/2,65)]+[(6,18)]
+for y,z in profile:wallverts.extend([(-70,y,z),(70,y,z)])
+for i in range(len(profile)-1):k=i*2;wallfaces.append((k,k+2,k+3,k+1))
+me=bpy.data.meshes.new("Studio curved sweep mesh");me.from_pydata(wallverts,[],wallfaces);me.update()
+cyclorama=bpy.data.objects.new("STUDIO - original seamless curved sweep",me);STUDIO.objects.link(cyclorama);me.materials.append(floor)
+for poly in me.polygons:poly.use_smooth=True
 def area(name,loc,power,size,col,target=(0,0,1)):
     data=bpy.data.lights.new(name,'AREA');data.energy=power;data.shape='DISK';data.size=size;data.color=col;o=bpy.data.objects.new(name,data);STUDIO.objects.link(o);o.location=loc;o.rotation_euler=(Vector(target)-o.location).to_track_quat('-Z','Y').to_euler()
 area('Key • large warm softbox',(-1.8,-3.0,3.8),330,1.6,(1,.92,.84))
@@ -484,12 +494,17 @@ camdata=bpy.data.cameras.new('Portrait camera');cam=bpy.data.objects.new('Portra
 views={'front':((0,-5.25,1.70),(0,0,.86),1.78,(2,3)),'face':((.05,-4.2,1.65),(.05,-.015,1.525),.43,(1,1)),'threequarter':((3.4,-5.3,2.3),(0,0,.865),1.83,(2,3)),'back':((0,5.3,2.1),(0,0,.865),1.83,(2,3)),'side':((5.3,-.05,2.0),(0,0,.865),1.83,(2,3))}
 views['face_side']=((.85,-1.15,1.67),(.04,-.005,1.535),.43,(1,1))
 def setview(name):
+    cyclorama.hide_render=name!='front'
     camdata.type='PERSP' if name=='front' else 'ORTHO';camdata.lens=70;camdata.sensor_fit='VERTICAL';camdata.sensor_height=24
     pos,target,scale,aspect=views[name];cam.location=pos;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler();camdata.ortho_scale=scale;scene.render.resolution_y=args.size;scene.render.resolution_x=round(args.size*aspect[0]/aspect[1])
 setview('front')
 base='gpt6_astra_pro_mcp_blender_rgirljk'
 if not args.no_export:
     bpy.ops.wm.save_as_mainfile(filepath=str(BUILD/(base+f'_r{args.revision:02d}.blend')))
+    # Preserve original sculpt colors in the .blend; the export uses their baked original atlas.
+    for obj in CHAR.objects:
+        if obj.type=='MESH' and obj.get('original_procedural_skin_atlas'):
+            for attr in list(obj.data.color_attributes):obj.data.color_attributes.remove(attr)
     # Convert curve duplicates for glTF while preserving editable curves in the .blend.
     bpy.ops.object.select_all(action='DESELECT')
     for o in CHAR.objects:

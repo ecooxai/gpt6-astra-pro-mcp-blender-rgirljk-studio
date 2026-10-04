@@ -1,0 +1,17 @@
+{
+  "revision": 18,
+  "iteration": 18,
+  "score": 80,
+  "accepted": false,
+  "notes": "Six views reviewed. Thinner forehead wisps, tapered framing curls and clean collar attachment improve resemblance. Perspective framing is useful, but its studio horizon line needs removal and the face remains stylized. Continue with the chin/neck junction and original skin finishing.",
+  "reviewBasis": "Direct visual inspection of five rendered views; subjective resemblance score, not a computed similarity metric.",
+  "recordedAt": "2026-10-04T10:49:52+00:00",
+  "sourceCommit": "1f29895a0e1aaad6903ed3f6112883cbc930297f",
+  "evidence": [
+    "reviews/renders/r18/front.jpg",
+    "reviews/renders/r18/face.jpg",
+    "reviews/renders/r18/threequarter.jpg",
+    "reviews/renders/r18/back.jpg",
+    "reviews/renders/r18/side.jpg"
+  ]
+}

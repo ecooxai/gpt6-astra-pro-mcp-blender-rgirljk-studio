@@ -24,7 +24,7 @@ def skin_color(x,z):
             c=c*(1-a)+np.array([.014,.008,.006])*a
     return c
 def center_y(z):
-    return smooth_profile(z,[-.122,-.115,-.10,-.08,-.05,-.015,.010],[-.035,-.020,-.016,-.009,0,.010,.010]) if z<.010 else .010
+    return smooth_profile(z,[-.122,-.115,-.10,-.08,-.05,-.015,.010],[.008,-.014,-.016,-.009,0,.010,.010]) if z<.010 else .010
 def face_y(x,z):
     w,d=shape(z);y=center_y(z)-d*sqrt(max(0,1-(x/max(w,.001))**2))
     y-=.021*gauss(x,z,0,-.023,.013,.013)+.008*gauss(x,z,0,.006,.010,.031)
